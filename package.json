@@ -1,0 +1,23 @@
+{
+  "name": "ai-interview-prep-kit",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "packages/core",
+    "packages/server",
+    "packages/web",
+    "packages/cli"
+  ],
+  "overrides": {
+    "postcss": "^8.5.28"
+  },
+  "scripts": {
+    "dev": "npm run dev --workspace @interview-prep/web",
+    "dev:server": "npm run dev --workspace @interview-prep/server",
+    "build": "npm run build --workspaces --if-present",
+    "preevaluate": "npm run build --workspace @interview-prep/core && npm run build --workspace @interview-prep/cli",
+    "evaluate": "node packages/cli/dist/evaluate.js",
+    "typecheck": "npm run build --workspace @interview-prep/core && npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspace @interview-prep/core"
+  }
+}
