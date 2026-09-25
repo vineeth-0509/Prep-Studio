@@ -348,15 +348,19 @@ export default function HomePage() {
       const result = await request<{ kit: Kit }>(`/kits/${active.id}/regenerate`, { method: "POST", body: JSON.stringify({ section, category: selectedCategory }) });
       const regeneratedQuestions = section === "question_category" ? result.kit.questions.filter((question) => question.category === selectedCategory) : [];
       if (section === "question_category" && !regeneratedQuestions.length) throw new Error(`The server returned no ${selectedCategory} questions. Please try again.`);
+      const scheduleChanged = section === "schedule" && (
+        result.kit.schedule.days_available !== active.kit?.schedule.days_available ||
+        JSON.stringify(result.kit.schedule.days) !== JSON.stringify(active.kit?.schedule.days)
+      );
       setActive((current) => current?.id === active.id ? { ...current, kit: result.kit } : current);
-      if (section === "question_category" || section === "schedule") {
+      if (section === "question_category" || scheduleChanged) {
         setStudyProgress({});
         localStorage.removeItem(`prepstudio-study-progress-${active.id}`);
         setSelectedStudyDay(null);
         setSelectedStudyQuestionId(null);
       }
       if (section === "question_category") { setCategory(selectedCategory!); setSelectedBankQuestionId(regeneratedQuestions[0]?.id ?? null); }
-      setMessage(section === "company_brief" ? "Company brief regenerated." : section === "schedule" ? "Study schedule regenerated." : `${selectedCategory} questions regenerated (${regeneratedQuestions.length}).`);
+      setMessage(section === "company_brief" ? "Company brief regenerated." : section === "schedule" ? scheduleChanged ? "Study schedule regenerated and assignments updated." : "Schedule rebuilt. It is unchanged because the same questions and available days produce the same plan." : `${selectedCategory} questions regenerated (${regeneratedQuestions.length}).`);
     } catch (error) { setMessage(error instanceof Error ? error.message : "Regeneration failed"); }
     finally { setRegenerating(null); }
   }
