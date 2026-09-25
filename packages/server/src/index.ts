@@ -100,7 +100,7 @@ app.get("/api/auth/me", authenticate, asyncHandler<AuthedRequest>(async (req, re
 }));
 
 app.get("/api/kits", authenticate, asyncHandler<AuthedRequest>(async (req, res) => {
-  const kits = await KitModel.find({ owner_id: req.userId }).sort({ createdAt: -1 }).select("status current_step steps_completed kit.source kit.role.title error createdAt");
+  const kits = await KitModel.find({ owner_id: req.userId }).sort({ createdAt: -1 }).select("status current_step steps_completed kit.source kit.role.title error createdAt days");
   return res.json({ kits: kits.map((record) => {
     const kit = record.get("kit") as Kit | undefined;
     return {
@@ -110,6 +110,8 @@ app.get("/api/kits", authenticate, asyncHandler<AuthedRequest>(async (req, res) 
       steps_completed: record.get("steps_completed"),
       kit: kit ? { source: kit.source, role: { title: kit.role.title } } : undefined,
       error: record.get("error"),
+      days: record.get("days"),
+      createdAt: (record.get("createdAt") as Date | undefined)?.toISOString(),
     };
   }) });
 }));
@@ -138,7 +140,7 @@ app.post("/api/kits", authenticate, generationLimiter, asyncHandler<AuthedReques
 app.get("/api/kits/:id", authenticate, asyncHandler<AuthedRequest>(async (req, res) => {
   const record = await KitModel.findOne({ _id: req.params.id, owner_id: req.userId });
   if (!record) return res.status(404).json({ code: "NOT_FOUND", message: "Kit not found." });
-  return res.json({ id: String(record._id), status: record.get("status"), current_step: record.get("current_step"), steps_completed: record.get("steps_completed"), kit: record.get("kit"), error: record.get("error") });
+  return res.json({ id: String(record._id), status: record.get("status"), current_step: record.get("current_step"), steps_completed: record.get("steps_completed"), kit: record.get("kit"), error: record.get("error"), days: record.get("days"), createdAt: (record.get("createdAt") as Date | undefined)?.toISOString() });
 }));
 app.get("/api/kits/:id/status", authenticate, asyncHandler<AuthedRequest>(async (req, res) => {
   const record = await KitModel.findOne({ _id: req.params.id, owner_id: req.userId }).select("status current_step steps_completed error");

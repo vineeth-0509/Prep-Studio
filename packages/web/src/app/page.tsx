@@ -1,21 +1,38 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { buildSchedule, checkCoverage, type Kit } from "@interview-prep/core/browser";
 
 const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
 const pipelineSteps = ["extract_requirements", "discover_hiring_pages", "fetch_public_discussion", "generate_company_brief", "generate_questions", "build_schedule", "check_coverage", "fill_gaps", "validate_and_persist"];
 type User = { id: string; email: string };
-type KitRecord = { id: string; status: string; current_step?: string; steps_completed?: string[]; kit?: Kit; error?: { message: string } };
+type KitRecord = { id: string; status: string; current_step?: string; steps_completed?: string[]; kit?: Kit; error?: { message: string }; days?: number; createdAt?: string };
 type QuestionCategory = Kit["questions"][number]["category"];
 type QuestionFilter = "all" | QuestionCategory;
 type RegenerationSection = "company_brief" | "schedule" | "question_category";
 type StudyProgress = Record<number, string[]>;
+const interviewDayChecklist = [
+  { id: "company", label: "Review the company brief and research sources" },
+  { id: "requirements", label: "Review the role’s most important requirements" },
+  { id: "examples", label: "Choose two examples that show your impact" },
+  { id: "questions", label: "Pick questions you want to ask the interviewer" },
+  { id: "setup", label: "Check your interview time, setup, and materials" },
+];
 const editedMeta = (item: object) => {
   const previous = ((item as { meta?: unknown }).meta ?? {}) as { version?: number };
   return { source: "user_edited" as const, pinned: true, version: (previous.version ?? 0) + 1 };
 };
+
+function daysUntilInterview(createdAt?: string, days?: number): number | null {
+  if (!createdAt || !Number.isInteger(days) || !days || days < 1) return null;
+  const created = new Date(createdAt);
+  if (Number.isNaN(created.getTime())) return null;
+  const today = new Date();
+  const interviewDate = new Date(created.getFullYear(), created.getMonth(), created.getDate() + days);
+  const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  return Math.max(0, Math.round((interviewDate.getTime() - todayDate.getTime()) / 86_400_000));
+}
 
 async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   const response = await fetch(`${API}${path}`, { ...init, credentials: "include", headers: { "Content-Type": "application/json", ...init.headers } });
@@ -129,7 +146,54 @@ function NewKitBuilder({ jd, onJdChange, companyUrl, onCompanyUrlChange, days, o
   </div>;
 }
 
+function PrepJourneyVisual() {
+  const reduceMotion = useReducedMotion();
+  const steps = [
+    { number: "01", title: "Your role", detail: "Job description + company", icon: "↗" },
+    { number: "02", title: "Focused research", detail: "Role context + public sources", icon: "⌕" },
+    { number: "03", title: "Practice kit", detail: "Questions + answer guides", icon: "✳" },
+  ];
+
+  return <motion.div
+    aria-label="PrepStudio turns a job description into a focused interview preparation kit"
+    initial={reduceMotion ? false : { opacity: 0, y: 18, scale: 0.98 }}
+    animate={{ opacity: 1, y: 0, scale: 1 }}
+    transition={{ duration: reduceMotion ? 0 : 0.65, ease: "easeOut" }}
+    className="relative mx-auto w-full max-w-lg"
+  >
+    <div aria-hidden="true" className="absolute -inset-5 rounded-[2.5rem] bg-gradient-to-br from-indigo-200/60 via-sky-100/50 to-violet-100/60 blur-2xl" />
+    <div className="relative overflow-hidden rounded-[1.75rem] border border-white/80 bg-white/90 p-5 shadow-[0_24px_70px_-28px_rgba(49,46,129,.35)] backdrop-blur sm:p-6">
+      <div aria-hidden="true" className="absolute -right-12 -top-16 h-48 w-48 rounded-full bg-indigo-100/70 blur-3xl" />
+      <div className="relative flex items-center justify-between gap-3">
+        <div><p className="text-[10px] font-bold uppercase tracking-[.2em] text-indigo-600">Your preparation, in motion</p><p className="mt-1 text-sm font-semibold text-slate-900">From job post to ready</p></div>
+        <motion.span animate={reduceMotion ? undefined : { scale: [1, 1.08, 1] }} transition={reduceMotion ? undefined : { duration: 2.8, repeat: Infinity, ease: "easeInOut" }} className="inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1.5 text-[10px] font-semibold text-emerald-700"><span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Built around you</motion.span>
+      </div>
+
+      <div className="relative mt-6 grid gap-4 sm:grid-cols-[1fr_.95fr] sm:items-center">
+        <div className="relative space-y-3">
+          <svg aria-hidden="true" viewBox="0 0 12 160" className="absolute left-[17px] top-7 h-[calc(100%-2.5rem)] w-3 overflow-visible"><motion.path d="M6 0V160" fill="none" stroke="url(#prep-line)" strokeWidth="2" strokeDasharray="4 5" initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ duration: reduceMotion ? 0 : 1.2, delay: 0.2 }} /><defs><linearGradient id="prep-line" x1="0" x2="0" y1="0" y2="1"><stop stopColor="#6366f1"/><stop offset="1" stopColor="#a5b4fc"/></linearGradient></defs></svg>
+          {steps.map((step, index) => <motion.div key={step.number} initial={reduceMotion ? false : { opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: reduceMotion ? 0 : 0.4, delay: reduceMotion ? 0 : 0.2 + index * 0.14 }} className="relative flex items-center gap-3 rounded-xl border border-slate-100 bg-white/90 p-3 shadow-sm">
+            <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl text-sm font-semibold ${index === 2 ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20" : "bg-indigo-50 text-indigo-600"}`}>{step.icon}</span>
+            <span className="min-w-0"><span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">{step.number} / 03</span><span className="mt-0.5 block text-xs font-semibold text-slate-800">{step.title}</span><span className="mt-0.5 block truncate text-[10px] text-slate-500">{step.detail}</span></span>
+          </motion.div>)}
+        </div>
+
+        <motion.div animate={reduceMotion ? undefined : { y: [0, -5, 0] }} transition={reduceMotion ? undefined : { duration: 4.5, repeat: Infinity, ease: "easeInOut" }} className="relative rounded-2xl bg-slate-950 p-4 text-white shadow-xl shadow-indigo-950/15">
+          <div className="flex items-center justify-between"><span className="text-[9px] font-bold uppercase tracking-[.18em] text-indigo-300">Your prep kit</span><span className="rounded-full bg-emerald-400/15 px-2 py-1 text-[9px] font-semibold text-emerald-300">READY</span></div>
+          <p className="mt-3 text-sm font-semibold">A clear next step, every day.</p>
+          <div className="mt-4 space-y-2">
+            {["Role-specific questions", "Answer guides", "Study schedule"].map((item, index) => <motion.div key={item} initial={reduceMotion ? false : { opacity: 0, scaleX: 0.92 }} animate={{ opacity: 1, scaleX: 1 }} transition={{ duration: reduceMotion ? 0 : 0.35, delay: reduceMotion ? 0 : 0.6 + index * 0.12 }} className="flex origin-left items-center gap-2 rounded-lg border border-white/10 bg-white/[.06] px-2.5 py-2"><span className="grid h-5 w-5 place-items-center rounded-md bg-indigo-400/15 text-[10px] text-indigo-200">{index === 0 ? "?" : index === 1 ? "✓" : "↗"}</span><span className="text-[10px] text-slate-200">{item}</span></motion.div>)}
+          </div>
+          <div className="mt-4 flex gap-1.5" aria-hidden="true"><span className="h-1 flex-1 rounded-full bg-indigo-400"/><span className="h-1 flex-1 rounded-full bg-indigo-300/60"/><span className="h-1 flex-1 rounded-full bg-indigo-200/30"/></div>
+        </motion.div>
+      </div>
+      <div aria-hidden="true" className="absolute -bottom-1 left-0 h-1 w-full bg-gradient-to-r from-indigo-500 via-violet-400 to-sky-300" />
+    </div>
+  </motion.div>;
+}
+
 export default function HomePage() {
+  const reduceMotion = useReducedMotion();
   const [user, setUser] = useState<User | null>(null);
   const [authReady, setAuthReady] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
@@ -155,6 +219,7 @@ export default function HomePage() {
   const [selectedStudyDay, setSelectedStudyDay] = useState<number | null>(null);
   const [selectedStudyQuestionId, setSelectedStudyQuestionId] = useState<string | null>(null);
   const [studyProgress, setStudyProgress] = useState<StudyProgress>({});
+  const [interviewDayChecks, setInterviewDayChecks] = useState<Record<string, string[]>>({});
   const [category, setCategory] = useState<QuestionFilter>("all");
   const [selectedBankQuestionId, setSelectedBankQuestionId] = useState<string | null>(null);
   const [regenerating, setRegenerating] = useState<string | null>(null);
@@ -172,6 +237,15 @@ export default function HomePage() {
   }, []);
   useEffect(() => { void refresh().catch(() => {}); }, [refresh]);
   useEffect(() => { setShowFlashcardTip(localStorage.getItem("prepstudio-hide-flashcard-tip") !== "true"); }, []);
+  useEffect(() => {
+    if (!active?.id) return;
+    try {
+      const saved = JSON.parse(localStorage.getItem(`prepstudio-interview-day-${active.id}`) || "[]");
+      setInterviewDayChecks((current) => ({ ...current, [active.id]: Array.isArray(saved) ? saved.filter((item): item is string => typeof item === "string") : [] }));
+    } catch {
+      setInterviewDayChecks((current) => ({ ...current, [active.id]: [] }));
+    }
+  }, [active?.id]);
   useEffect(() => {
     const running = kits.filter((kit) => kit.status === "running");
     if (!running.length) return;
@@ -230,6 +304,7 @@ export default function HomePage() {
       await request(`/kits/${target.id}`, { method: "DELETE" });
       setKits((current) => current.filter((item) => item.id !== target.id));
       localStorage.removeItem(`prepstudio-study-progress-${target.id}`);
+      localStorage.removeItem(`prepstudio-interview-day-${target.id}`);
       if (active?.id === target.id) {
         kitLoadSequence.current++;
         setActive(null);
@@ -242,6 +317,15 @@ export default function HomePage() {
     } finally {
       setDeletingKitId(null);
     }
+  }
+
+  function toggleInterviewDayCheck(itemId: string) {
+    if (!active) return;
+    const checked = new Set(interviewDayChecks[active.id] ?? []);
+    if (checked.has(itemId)) checked.delete(itemId); else checked.add(itemId);
+    const next = [...checked];
+    setInterviewDayChecks((current) => ({ ...current, [active.id]: next }));
+    localStorage.setItem(`prepstudio-interview-day-${active.id}`, JSON.stringify(next));
   }
 
   async function saveKit(next: Kit) {
@@ -330,6 +414,8 @@ export default function HomePage() {
     return { requirement, score: confidence === null ? null : (requirement.priority === "must" ? 2 : 1) * difficulty * (6 - confidence), confidence, difficulty };
   }).filter((item) => item.confidence !== null).sort((a, b) => (b.score ?? 0) - (a.score ?? 0)).slice(0, 5) : [];
   const card = reviewCards.find((item) => item.id === selectedFlashcardId) ?? reviewCards[practiceIndex];
+  const activeDaysRemaining = active ? daysUntilInterview(active.createdAt, active.days ?? kit?.schedule.days_available) : null;
+  const gamePlanRequirements = kit ? (kit.role.requirements.filter((item) => item.priority === "must").length ? kit.role.requirements.filter((item) => item.priority === "must") : kit.role.requirements).slice(0, 4) : [];
   const studyDays = kit?.schedule.days ?? [];
   const currentStudyDay = studyDays.find((day) => day.day === selectedStudyDay);
   const dayQuestions = kit && currentStudyDay ? currentStudyDay.question_ids.map((id) => kit.questions.find((question) => question.id === id)).filter((question): question is Kit["questions"][number] => Boolean(question)) : [];
@@ -372,13 +458,37 @@ export default function HomePage() {
   return <main className="min-h-screen bg-[#f6f7fb] text-slate-900">
     <header className="sticky top-0 z-20 border-b border-slate-200/80 bg-white/85 backdrop-blur"><div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4"><button type="button" onClick={() => { setActive(null); setMessage(""); }} className="font-semibold tracking-tight">Prep<span className="text-indigo-600">Studio</span></button><div className="flex items-center gap-3 text-sm"><span className="hidden text-slate-500 sm:block">{user.email}</span><button onClick={async () => { await request("/auth/logout", { method: "POST" }); setUser(null); setActive(null); setShowAuth(false); }} className="rounded-lg border px-3 py-2 hover:bg-slate-50">Sign out</button></div></div></header>
     <div className={`mx-auto grid max-w-7xl gap-6 px-5 py-8 ${active ? "lg:grid-cols-[300px_minmax(0,1fr)]" : "lg:grid-cols-[280px_minmax(0,1fr)]"}`}>
-      <aside className="space-y-5"><div className="rounded-2xl border border-slate-200 bg-white p-5"><div className="flex items-center justify-between gap-2"><p className="text-xs font-bold uppercase tracking-widest text-slate-400">Your kits</p>{active && <button type="button" onClick={() => { setActive(null); setMessage(""); }} className="rounded-lg px-2 py-1 text-xs font-medium text-indigo-600 hover:bg-indigo-50">+ New</button>}</div><div className="mt-3 space-y-2">{kits.map((item) => <div key={item.id} className={`flex items-center gap-2 rounded-xl p-1 ${active?.id === item.id ? "bg-indigo-50" : "hover:bg-slate-50"}`}><button type="button" onClick={() => void openKit(item.id)} aria-current={active?.id === item.id ? "page" : undefined} className={`min-w-0 flex-1 rounded-lg p-2 text-left text-sm ${active?.id === item.id ? "text-indigo-800" : "text-slate-800"}`}><span className="block truncate font-medium">{item.kit?.role?.title || item.kit?.source?.company || "New interview kit"}</span><span className="mt-1 block text-xs capitalize text-slate-500">{item.status === "running" ? `Building · ${item.current_step?.replaceAll("_", " ") || "starting"}` : item.status}</span></button><button type="button" aria-label={`Delete ${item.kit?.role?.title || item.kit?.source?.company || "interview kit"}`} title="Delete kit" onClick={() => { setDeleteError(""); setDeleteTarget(item); }} className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-rose-600 text-lg font-semibold leading-none text-white transition hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:ring-offset-2">−</button></div>)}{!kits.length && <p className="py-3 text-sm text-slate-500">Your first kit will appear here.</p>}</div></div>{active && kitBuilder}</aside>
-      <section className="min-w-0">{!active ? <div className="mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-3xl flex-col justify-center py-4"><div className="mb-7"><p className="text-xs font-bold uppercase tracking-[.18em] text-indigo-600">Your next interview starts here</p><h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Build a plan for the role you want.</h1><p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">Add the job description, the company website, and the time you have. PrepStudio will organize research, questions, and practice into one focused kit.</p></div>{kitBuilder}</div>
+      <aside className="space-y-5"><div className="rounded-2xl border border-slate-200 bg-white p-5"><div className="flex items-center justify-between gap-2"><p className="text-xs font-bold uppercase tracking-widest text-slate-400">Your kits</p>{active && <button type="button" onClick={() => { setActive(null); setMessage(""); }} className="rounded-lg px-2 py-1 text-xs font-medium text-indigo-600 hover:bg-indigo-50">+ New</button>}</div><div className="mt-3 space-y-2">{kits.map((item) => { const remainingDays = daysUntilInterview(item.createdAt, item.days); return <div key={item.id} className={`flex items-center gap-2 rounded-xl p-1 ${active?.id === item.id ? "bg-indigo-50" : "hover:bg-slate-50"}`}><button type="button" onClick={() => void openKit(item.id)} aria-current={active?.id === item.id ? "page" : undefined} className={`min-w-0 flex-1 rounded-lg p-2 text-left text-sm ${active?.id === item.id ? "text-indigo-800" : "text-slate-800"}`}><span className="block truncate font-medium">{item.kit?.role?.title || item.kit?.source?.company || "New interview kit"}</span><span className="mt-1 flex flex-wrap items-center gap-1.5 text-xs capitalize text-slate-500">{item.status === "running" ? `Building · ${item.current_step?.replaceAll("_", " ") || "starting"}` : item.status}{item.status !== "running" && remainingDays !== null && <span className={`rounded-full px-2 py-0.5 font-semibold normal-case ${remainingDays === 0 ? "bg-emerald-100 text-emerald-800" : "bg-slate-100 text-slate-600"}`}>{remainingDays === 0 ? "Interview day" : `${remainingDays} ${remainingDays === 1 ? "day" : "days"} left`}</span>}</span></button><button type="button" aria-label={`Delete ${item.kit?.role?.title || item.kit?.source?.company || "interview kit"}`} title="Delete kit" onClick={() => { setDeleteError(""); setDeleteTarget(item); }} className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-rose-600 text-lg font-semibold leading-none text-white transition hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:ring-offset-2">−</button></div>; })}{!kits.length && <p className="py-3 text-sm text-slate-500">Your first kit will appear here.</p>}</div></div>{active && kitBuilder}</aside>
+      <section className="min-w-0">{!active ? <div className="mx-auto w-full max-w-7xl py-4"><div className="grid items-center gap-8 lg:grid-cols-[1.05fr_.95fr] lg:gap-10"><motion.div initial={reduceMotion ? false : { opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.55, ease: "easeOut" }} className="relative py-3 sm:py-6"><motion.p initial={reduceMotion ? false : { opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: reduceMotion ? 0 : 0.4 }} className="flex items-center gap-2 text-xs font-bold uppercase tracking-[.18em] text-indigo-600"><span className="h-2 w-2 rounded-full bg-indigo-500 shadow-[0_0_0_4px_rgba(99,102,241,.12)]"/>Your next interview starts here</motion.p><h1 className="mt-4 max-w-3xl text-4xl font-semibold leading-[1.08] tracking-[-.04em] text-slate-950 sm:text-5xl xl:text-6xl">Build a plan for the <span className="relative inline-block whitespace-nowrap bg-gradient-to-r from-indigo-600 via-violet-600 to-indigo-500 bg-clip-text text-transparent">role you want.<motion.span aria-hidden="true" initial={reduceMotion ? false : { scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: reduceMotion ? 0 : 0.7, delay: reduceMotion ? 0 : 0.35, ease: "easeOut" }} className="absolute -bottom-1 left-0 h-[3px] w-full origin-left rounded-full bg-gradient-to-r from-indigo-500 to-violet-400"/></span></h1><p className="mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">Add the job description, the company website, and the time you have. <span className="font-medium text-slate-800">PrepStudio turns them into a focused plan</span> with research, questions, and daily practice.</p><div className="mt-6 flex flex-wrap gap-2 text-[11px] font-medium text-slate-600"><span className="rounded-full border border-slate-200 bg-white/80 px-3 py-1.5">Role-specific research</span><span className="rounded-full border border-slate-200 bg-white/80 px-3 py-1.5">Questions with answer guides</span><span className="rounded-full border border-slate-200 bg-white/80 px-3 py-1.5">A clear day-by-day plan</span></div></motion.div><PrepJourneyVisual/></div><div className="mt-8 flex justify-center">{kitBuilder}</div></div>
       : active.status === "running" ? <div className="rounded-3xl bg-white p-8 shadow-sm"><p className="text-sm font-semibold text-indigo-600">Research in progress</p><h1 className="mt-2 text-3xl font-semibold">Putting your kit together</h1><div className="mt-8 space-y-4">{pipelineSteps.filter((step) => step !== "fill_gaps" || active.steps_completed?.includes(step) || active.current_step === step).map((step) => { const done = active.steps_completed?.includes(step); const current = active.current_step === step; return <div key={step} className="flex items-center gap-3"><span className={`grid h-7 w-7 place-items-center rounded-full text-xs ${done ? "bg-emerald-100 text-emerald-700" : current ? "animate-pulse bg-indigo-100 text-indigo-700" : "bg-slate-100 text-slate-400"}`}>{done ? "✓" : "•"}</span><span className={done || current ? "font-medium" : "text-slate-400"}>{step.replaceAll("_", " ")}</span></div>; })}</div></div>
       : active.status === "failed" ? <div role="alert" className="rounded-3xl border border-rose-200 bg-white p-8"><h1 className="text-2xl font-semibold">We couldn’t finish this kit</h1><p className="mt-3 text-rose-700">{active.error?.message || "An unexpected generation error occurred."}</p></div>
       : !kit ? <div className="rounded-3xl bg-white p-8">Loading kit…</div> : <div className="space-y-5">
         {message && <p role={regenerationInProgress || regenerationSucceeded ? "status" : "alert"} className={"rounded-xl border px-4 py-3 text-sm " + (regenerationSucceeded ? "border-emerald-200 bg-emerald-50 text-emerald-800" : regenerationInProgress ? "border-indigo-200 bg-indigo-50 text-indigo-800" : "border-rose-200 bg-rose-50 text-rose-800")}>{message}</p>}
-        <div className="rounded-3xl bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-800 p-7 text-white sm:p-9"><p className="text-xs font-bold uppercase tracking-[.18em] text-indigo-300">Your interview plan</p><h1 className="mt-3 text-3xl font-semibold sm:text-4xl">{kit.role.title || kit.source.role || "Preparation kit"}</h1><p className="mt-2 text-slate-300">{kit.source.company} · {kit.schedule.days_available} days to prepare</p><div className="mt-6 flex flex-wrap gap-2"><span className="rounded-full bg-white/10 px-3 py-1.5 text-sm">{kit.role.requirements.length} role requirements</span><span className="rounded-full bg-white/10 px-3 py-1.5 text-sm">{kit.questions.length} practice questions</span><span className="rounded-full bg-white/10 px-3 py-1.5 text-sm">{kit.coverage.uncovered_requirement_ids.length ? `${kit.coverage.uncovered_requirement_ids.length} coverage gaps` : "Full requirement coverage"}</span></div></div>
+        <div className="rounded-3xl bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-800 p-7 text-white sm:p-9"><p className="text-xs font-bold uppercase tracking-[.18em] text-indigo-300">Your interview plan</p><h1 className="mt-3 text-3xl font-semibold sm:text-4xl">{kit.role.title || kit.source.role || "Preparation kit"}</h1><p className="mt-2 text-slate-300">{kit.source.company} · {activeDaysRemaining === 0 ? "Interview day" : activeDaysRemaining !== null ? `${activeDaysRemaining} ${activeDaysRemaining === 1 ? "day" : "days"} left` : `${kit.schedule.days_available} day preparation plan`}</p><div className="mt-6 flex flex-wrap gap-2"><span className="rounded-full bg-white/10 px-3 py-1.5 text-sm">{kit.role.requirements.length} role requirements</span><span className="rounded-full bg-white/10 px-3 py-1.5 text-sm">{kit.questions.length} practice questions</span><span className="rounded-full bg-white/10 px-3 py-1.5 text-sm">{kit.coverage.uncovered_requirement_ids.length ? `${kit.coverage.uncovered_requirement_ids.length} coverage gaps` : "Full requirement coverage"}</span></div></div>
+        <article className="overflow-hidden rounded-3xl border border-indigo-100 bg-gradient-to-br from-white via-indigo-50/40 to-white p-5 shadow-sm sm:p-7">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div><p className="text-xs font-bold uppercase tracking-[.18em] text-indigo-600">Before you walk in</p><h2 className="mt-2 text-2xl font-semibold tracking-tight">Interview Day Game Plan</h2><p className="mt-1 max-w-2xl text-sm leading-6 text-slate-600">A quick role recap, thoughtful questions, and a checklist to help you arrive prepared.</p></div>
+            <span className={`inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-semibold ${activeDaysRemaining === 0 ? "bg-emerald-100 text-emerald-800 ring-1 ring-emerald-200" : "bg-indigo-100 text-indigo-800"}`}><span className={`h-2 w-2 rounded-full ${activeDaysRemaining === 0 ? "bg-emerald-600" : "bg-indigo-600"}`} />{activeDaysRemaining === 0 ? "Interview day" : activeDaysRemaining !== null ? `${activeDaysRemaining} ${activeDaysRemaining === 1 ? "day" : "days"} to go` : "Plan ready"}</span>
+          </div>
+          <div className="mt-6 grid gap-4 lg:grid-cols-2">
+            <section className="rounded-2xl border border-slate-200/80 bg-white p-5">
+              <p className="text-[11px] font-bold uppercase tracking-[.15em] text-slate-400">Company & role at a glance</p>
+              <h3 className="mt-3 text-base font-semibold">{kit.source.company} · {kit.role.title || kit.source.role}</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-600">{kit.company_brief.what_they_do || kit.company_brief.summary}</p>
+              <div className="mt-4 border-t border-slate-100 pt-4"><p className="text-xs font-semibold text-slate-700">Role priorities to keep in view</p>{gamePlanRequirements.length ? <ul className="mt-2 flex flex-wrap gap-2">{gamePlanRequirements.map((item) => <li key={item.id} className="rounded-lg bg-indigo-50 px-2.5 py-1.5 text-xs leading-5 text-indigo-800">{item.text}</li>)}</ul> : <p className="mt-2 text-sm text-slate-500">Review the role requirements in your kit before the interview.</p>}</div>
+            </section>
+            <section className="rounded-2xl border border-slate-200/80 bg-white p-5">
+              <p className="text-[11px] font-bold uppercase tracking-[.15em] text-slate-400">Questions you can ask</p>
+              <p className="mt-2 text-sm text-slate-600">Choose one or two that feel natural for your conversation.</p>
+              <ol className="mt-3 space-y-2.5">{[`What would success look like in the first few months for a ${kit.role.title || "person in this role"}?`, "What is the most important technical challenge the team is working through right now?", "How does the team share design feedback and make trade-offs when building a solution?"].map((question, index) => <li key={question} className="flex gap-3 text-sm leading-5 text-slate-700"><span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-slate-100 text-xs font-semibold text-slate-500">{index + 1}</span><span>{question}</span></li>)}</ol>
+            </section>
+          </div>
+          <section className="mt-4 rounded-2xl border border-slate-200/80 bg-white p-5">
+            <div className="flex flex-wrap items-center justify-between gap-2"><div><p className="text-[11px] font-bold uppercase tracking-[.15em] text-slate-400">Final check</p><h3 className="mt-1 font-semibold">Your ready-to-go checklist</h3></div><span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">{interviewDayChecklist.filter((item) => interviewDayChecks[active.id]?.includes(item.id)).length} / {interviewDayChecklist.length} ready</span></div>
+            <ul className="mt-4 grid gap-2 sm:grid-cols-2">{interviewDayChecklist.map((item) => { const checked = interviewDayChecks[active.id]?.includes(item.id) ?? false; return <li key={item.id}><label className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border px-3 py-2.5 text-sm transition ${checked ? "border-emerald-200 bg-emerald-50 text-emerald-900" : "border-slate-200 bg-slate-50 text-slate-700 hover:border-indigo-200 hover:bg-indigo-50/50"}`}><input type="checkbox" checked={checked} onChange={() => toggleInterviewDayCheck(item.id)} className="h-4 w-4 shrink-0 accent-emerald-600" /><span>{item.label}</span></label></li>; })}</ul>
+            <p className="mt-3 text-[11px] text-slate-400">Checklist progress is saved in this browser for this kit.</p>
+          </section>
+        </article>
         <div className="grid items-start gap-5 xl:grid-cols-2"><article className="min-w-0 rounded-2xl border bg-white p-6"><div className="flex items-center justify-between gap-3"><h2 className="text-lg font-semibold">Company brief</h2><button disabled={regenerating !== null} onClick={() => void regenerate("company_brief")} className="shrink-0 text-xs text-indigo-600 disabled:text-slate-400">{regenerating === "company_brief" ? "Regenerating…" : "Regenerate brief"}</button></div><label className="mt-3 block text-xs font-medium text-slate-500">Company summary<textarea key={kit.company_brief.summary} aria-label="Edit company summary" defaultValue={kit.company_brief.summary} onBlur={(event) => { if (event.target.value !== kit.company_brief.summary) void saveKit({ ...kit, company_brief: { ...kit.company_brief, summary: event.target.value, meta: editedMeta(kit.company_brief) } }); }} className="mt-1 w-full resize-y rounded-lg border-0 bg-slate-50 p-3 text-sm leading-6 text-slate-800 outline-none focus:ring-2 focus:ring-indigo-400" rows={5}/></label><label className="mt-3 block text-xs font-medium text-slate-500">What they do<textarea key={kit.company_brief.what_they_do} aria-label="Edit what the company does" defaultValue={kit.company_brief.what_they_do} onBlur={(event) => { if (event.target.value !== kit.company_brief.what_they_do) void saveKit({ ...kit, company_brief: { ...kit.company_brief, what_they_do: event.target.value, meta: editedMeta(kit.company_brief) } }); }} className="mt-1 w-full resize-y rounded-lg border-0 bg-slate-50 p-3 text-sm leading-6 text-slate-700 outline-none focus:ring-2 focus:ring-indigo-400" rows={4}/></label><section className="mt-4 border-t border-slate-100 pt-4"><div className="flex items-center justify-between gap-3"><h3 className="text-sm font-semibold text-slate-800">Research sources</h3><span className="text-xs text-slate-400">{new Set(kit.company_brief.sources.filter((source) => /^https?:\/\//i.test(source))).size} links</span></div>{kit.company_brief.sources.some((source) => /^https?:\/\//i.test(source)) ? <ul className="mt-3 grid min-w-0 gap-2 sm:grid-cols-2">{[...new Set(kit.company_brief.sources.filter((source) => /^https?:\/\//i.test(source)))].map((source) => { let label = source; try { const url = new URL(source); label = url.hostname.replace(/^www\./, "") + (url.pathname === "/" ? "" : url.pathname); } catch { /* retain the original source label */ } return <li key={source} className="min-w-0"><a href={source} target="_blank" rel="noreferrer" title={source} className="block min-w-0 rounded-lg bg-slate-50 px-3 py-2 text-xs leading-5 text-slate-600 transition hover:bg-indigo-50 hover:text-indigo-700"><span className="block break-all">{label}</span><span className="mt-1 block text-[10px] text-slate-400">Open source ↗</span></a></li>; })}</ul> : <p className="mt-2 rounded-lg bg-slate-50 p-3 text-xs text-slate-500">No public sources were found for this brief.</p>}</section></article>
         <article className="rounded-2xl border bg-white p-6"><h2 className="text-lg font-semibold">Role breakdown</h2><div className="mt-3 grid gap-2 sm:grid-cols-2"><label className="text-xs text-slate-500">Role title<input defaultValue={kit.role.title} onBlur={(event) => { if (event.target.value !== kit.role.title) void saveKit({ ...kit, role: { ...kit.role, title: event.target.value } }); }} className="mt-1 w-full rounded-lg bg-slate-50 p-2 text-sm text-slate-900" /></label><label className="text-xs text-slate-500">Seniority<input defaultValue={kit.role.seniority} onBlur={(event) => { if (event.target.value !== kit.role.seniority) void saveKit({ ...kit, role: { ...kit.role, seniority: event.target.value } }); }} className="mt-1 w-full rounded-lg bg-slate-50 p-2 text-sm text-slate-900" /></label></div><div className="mt-4 space-y-2">{kit.role.requirements.map((r) => <div key={r.id} className="flex items-start gap-2 border-t py-3"><input aria-label={`Edit requirement ${r.id}`} defaultValue={r.text} onBlur={(event) => { if (event.target.value !== r.text) void saveKit({ ...kit, role: { ...kit.role, requirements: kit.role.requirements.map((item) => item.id === r.id ? { ...item, text: event.target.value, meta: editedMeta(item) } : item) } }); }} className="min-w-0 flex-1 rounded-lg bg-slate-50 p-2 text-sm"/><select aria-label={`Requirement ${r.id} priority`} value={r.priority} onChange={(event) => void saveKit({ ...kit, role: { ...kit.role, requirements: kit.role.requirements.map((item) => item.id === r.id ? { ...item, priority: event.target.value as typeof r.priority, meta: editedMeta(item) } : item) } })} className="rounded-lg border px-2 py-2 text-xs"><option value="must">must</option><option value="nice">nice</option></select><button aria-label={`Delete requirement ${r.id}`} onClick={() => removeRequirement(kit, r.id)} className="rounded-lg px-2 py-2 text-xs text-rose-600 hover:bg-rose-50">×</button></div>)}</div><h3 className="mt-5 text-sm font-semibold">Responsibilities</h3>{kit.role.responsibilities.map((responsibility, index) => <textarea key={`${index}-${responsibility.slice(0, 12)}`} aria-label={`Edit responsibility ${index + 1}`} defaultValue={responsibility} onBlur={(event) => { if (event.target.value !== responsibility) void saveKit({ ...kit, role: { ...kit.role, responsibilities: kit.role.responsibilities.map((item, itemIndex) => itemIndex === index ? event.target.value : item) } }); }} className="mt-2 w-full rounded-lg bg-slate-50 p-2 text-sm" rows={2}/>)}</article></div>
         <article className="rounded-2xl border bg-white p-6">
