@@ -346,6 +346,10 @@ export async function generateKit(input: GenerateInput): Promise<Kit> {
     schedule.days = rebuilt.days.map((day) => ({ ...day, meta: { source: "generated", pinned: false, version: 0 } }));
     await announce(input, "fill_gaps", "completed", `${coverage.uncovered_requirement_ids.length} remaining gap(s)`, { questions, coverage, schedule });
   }
+  const uncoveredMustHaveIds = coverage.uncovered_requirement_ids.filter((id) => requirements.find((requirement) => requirement.id === id)?.priority === "must");
+  if (uncoveredMustHaveIds.length) {
+    throw new Error(`Could not generate questions for must-have requirement(s): ${uncoveredMustHaveIds.join(", ")}. The incomplete kit was not returned.`);
+  }
   await announce(input, "check_coverage", "completed", undefined, coverage);
 
   const kit = {

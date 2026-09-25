@@ -1,85 +1,119 @@
-# AI Interview Prep Kit
+# PrepStudio — AI Interview Prep Kit
 
-A full-stack app that turns a pasted job description, company website, and interview date into an editable preparation kit. It researches company pages, extracts requirements, creates practice questions and flashcards, checks coverage in code, and allocates study work across the available days.
+PrepStudio turns a job description, company website, and time until an interview into an editable interview-preparation kit. It researches the employer, extracts role requirements, creates questions and answer guides, checks requirement coverage, and schedules practice.
 
-## Stack and architecture
+## Technology and architecture
 
-- **Web:** Next.js App Router, TypeScript, Tailwind CSS, Framer Motion
-- **API:** Node.js, Express, TypeScript
-- **Persistence:** MongoDB with Mongoose
-- **Generation:** OpenAI Chat Completions API, default model `gpt-4o-mini`
-- **Validation:** Zod
-- **Research:** bounded HTML crawl with robots.txt checks; Tavily Search API for public interview discussion
+- **Web:** Next.js App Router, React, TypeScript, Tailwind CSS, and Framer Motion.
+- **API:** Node.js, Express, and TypeScript.
+- **Storage and authentication:** MongoDB with Mongoose, bcrypt password hashing, and signed JWT cookies.
+- **Generation:** OpenAI Chat Completions API (`gpt-4o-mini` by default).
+- **Search:** bounded company-site HTML crawling and Tavily Search for public interview discussions.
+- **Validation:** Zod schemas shared by the API, core package, and CLI.
 
-This is an npm workspaces monorepo. `packages/core` owns the kit contract, deterministic rules, retrieval helpers, and generation pipeline. Both the Express API and `packages/cli` import this package directly. The batch path therefore runs the same `generateKit` implementation as web requests instead of maintaining a second pipeline.
+The repository is an npm-workspaces monorepo. `packages/core` owns the kit schema and generation pipeline, and is imported by both `packages/server` and `packages/cli`. This keeps web and batch generation on the same implementation. The core package is a shared library; it is not a separately deployed service.
+
+### High-level architecture
+
+```mermaid
+flowchart LR
+    User[User] --> Web[Web app<br/>Next.js]
+    Web -->|HTTP API| API[Backend API<br/>Express]
+    API --> Core[Shared core<br/>schemas and generation pipeline]
+    CLI[Batch evaluation CLI] --> Core
+    API --> DB[(MongoDB<br/>users and saved kits)]
+    Core --> OpenAI[OpenAI API<br/>kit generation]
+    Core --> Tavily[Tavily Search<br/>public interview discussions]
+    Core --> Company[Company websites<br/>robots-aware page crawl]
+```
+
+The web app handles the user experience, while the API authenticates users and stores their kits. The API and batch CLI both call the shared core, which validates data, researches sources, generates content, checks requirement coverage, and builds the study schedule.
 
 ## Local setup
 
-Install Node.js 20+ and MongoDB, then from the repository root:
+Use Node.js 20 or newer. From the repository root:
 
 ```sh
-npm install
+npm ci
 ```
 
-Copy `.env.example` to `.env` and set `OPENAI_API_KEY`, `TAVILY_API_KEY`, `JWT_SECRET`, and `MONGODB_URI`. Tavily's free tier currently includes 1,000 monthly credits and does not require a credit card. The browser API address defaults to `http://localhost:4000/api`.
+Copy `.env.example` to `.env` in the repository root, then configure the values below. For the web app, run a local MongoDB instance or provide a MongoDB connection string. OpenAI credentials are required to generate content. Tavily enables public interview-discussion search; without it the pipeline records that no discussion results were available.
 
-Run the API and web app in separate terminals:
+| Variable | Used by | Purpose |
+| --- | --- | --- |
+| `OPENAI_API_KEY` | API and CLI | Secret key used to generate and structure kit content. |
+| `OPENAI_MODEL` | API and CLI | OpenAI model name; defaults to `gpt-4o-mini`. |
+| `TAVILY_API_KEY` | API and CLI | Enables public-web search for interview-process discussions. If unset, this research step is skipped and reported honestly. |
+| `MONGODB_URI` | API | MongoDB connection string for users and saved kits. Not needed by the CLI. |
+| `JWT_SECRET` | API | Secret used to sign authentication cookies. Use a long, random value. Not needed by the CLI. |
+| `PORT` | API | HTTP port; defaults to `4000`. |
+| `WEB_ORIGIN` | API | Exact allowed frontend origin for CORS, for example `http://localhost:3000`; do not add a trailing slash. |
+| `NEXT_PUBLIC_API_URL` | Web | API base URL including `/api`, for example `http://localhost:4000/api`. |
+| `ALLOW_LOCAL_FETCH` | CLI | Set to `true` only to test the CLI against a localhost fixture. Keep `false` for normal use; the web API always blocks local fetches. |
+
+Run the API and web application in separate terminals from the repository root:
 
 ```sh
 npm run dev:server
 npm run dev
 ```
 
-The web app is at `http://localhost:3000`, the API at `http://localhost:4000/api`, and `GET /api/health` is the backend health check.
+Open `http://localhost:3000`. The API base is `http://localhost:4000/api`; its health endpoint is `http://localhost:4000/api/health`.
 
-## Batch entry point
+## Batch evaluation CLI
 
-The required command is:
+The assessment command accepts a JSON array of cases and writes a JSON result file:
 
 ```sh
 npm run evaluate -- --input cases.json --output kits.json
 ```
 
-The input is an array of `{ "id": string, "jd": string, "company_url": string, "days": number }`. Output is `{ "version": "1.0", "generated_at": ISO timestamp, "kits": [...] }`, where every case gets either `{id,status:"ok",kit,error:null}` or `{id,status:"failed",kit:null,error:{code,message}}`. Successful kits are serialized with only the Appendix A fields; edit-state metadata remains internal to the application and is not added to batch output. The CLI continues after a failed case and uses the shared core pipeline. For local HTTP fixtures only, set `ALLOW_LOCAL_FETCH=true` in the environment before running the command; the web API never enables this exception.
+Put `cases.json` in the repository root, or pass paths relative to the directory where you run the command. Each input item has this shape:
 
-Copy `.env.example` to `.env` before running the CLI and set `OPENAI_API_KEY` and `TAVILY_API_KEY`. MongoDB and `JWT_SECRET` are needed by the web API, not by batch generation.
+```json
+[
+  {
+    "id": "case-1",
+    "jd": "Paste the complete job description here",
+    "company_url": "https://example.com/careers",
+    "days": 5
+  }
+]
+```
 
-## Kit contract and pipeline
+The output is a JSON object with `version`, `generated_at`, and a `kits` array. Each item is either `{ "id", "status": "ok", "kit", "error": null }` or `{ "id", "status": "failed", "kit": null, "error": { "code", "message" } }`. Successful `kit` objects contain exactly the Appendix A fields; internal edit metadata is omitted. The CLI continues to the next case if a case fails. It uses OpenAI and, when configured, Tavily; it does not need MongoDB or `JWT_SECRET`.
 
-`packages/core/src/kit-schema.ts` validates the Appendix A fields and the application's optional edit-state metadata. Unknown additive fields pass through internally so edit metadata is retained. The batch CLI projects validated kits to the exact Appendix A field set before writing its output.
+## Generation pipeline and coverage
 
-The pipeline is deliberately staged and reports progress:
+The pipeline runs in stages and reports progress:
 
-1. Extract requirements, role title, seniority, and responsibilities from the pasted JD only. A deterministic phrase classifier marks explicit required language `must`, explicit preferred/bonus language `nice`, and ambiguity `nice`.
-2. Check robots.txt and crawl same-host links using breadth-first traversal, relevance ranking, depth two, a 15-page cap, and a 2 MB per-page cap. Failed pages are skipped.
-3. Search Tavily for independent public interview discussions, exclude the company's own domain, and include result URLs and snippets as evidence. If the key is absent or no results are found, the brief says so rather than inventing a process.
-4. Generate the company brief from retrieved text and discussion snippets.
-5. Generate questions per requirement with a category-specific prompt. Calls are sequential, which caps model concurrency at one and avoids token bursts. Hiring evidence is included in question generation.
-6. Allocate questions to the requested number of days in deterministic code.
-7. Check coverage in code; generate a gap-only second pass when needed, then check once more. The pass count is recorded. The pipeline ships remaining gaps honestly after the second pass.
-8. Validate the complete kit against Appendix A before persistence or CLI output.
+1. Extract the role, responsibilities, and requirements from the supplied job description. Explicit required qualifications are marked `must`; preferred or bonus items are `nice`.
+2. Check `robots.txt` and crawl relevant same-host pages using breadth-first traversal, depth two, at most 15 pages, and a 2 MB per-page limit. Failed pages are skipped.
+3. Search Tavily for independent public interview discussions, excluding the employer's own domain. Up to three result URLs and snippets are used as evidence. Without a key or relevant results, the kit says public discussion was not found instead of inventing it.
+4. Generate a company brief from retrieved evidence and generate questions for role requirements.
+5. Allocate questions across the requested number of days using deterministic code.
+6. Check question-to-requirement coverage in code. If anything is uncovered, generate a gap-only second pass and check again. If any `must` requirement remains uncovered after that pass, the case fails with an error and no incomplete kit is returned. Remaining `nice` gaps are retained and reported in the kit.
+7. Validate the kit against the schema before saving or writing it.
 
-OpenAI requests retry transient failures and HTTP 429 responses up to five times with exponential delay and jitter, respecting `Retry-After`. Company HTML requests retry up to three times. `inputHash` deduplicates a user's repeated JD and company URL; a running request is reused and a failed request can be retried.
+OpenAI calls retry transient errors and HTTP 429 responses up to five times with exponential delay and jitter, respecting `Retry-After`. Company-page requests retry up to three times. A repeated JD/company URL is deduplicated by `inputHash`; an active request is reused and a failed request can be retried.
 
-## Deterministic schedule
+## Schedule and practice
 
-Questions sort by must-have priority, then difficulty, then stable ID. Difficulty estimates are 10, 15, and 25 minutes. Questions are assigned to the least-loaded day with a small early-day weighting. The output always has exactly `days_available` days; empty days in a long schedule become must-have review days, or the top-ranked topic when there are no must-haves. A one-day schedule includes all questions and compresses the work into that day. Every day's focus is built from its dominant question category.
+Questions are prioritized by requirement priority, difficulty, and stable ID. Difficulty maps to estimated effort of 10, 15, or 25 minutes. Questions go to the least-loaded day with a slight early-day weighting. The schedule has exactly the requested number of days; unused days become review days. A one-day schedule includes all questions.
 
-Coverage is a set comparison between requirement IDs and all linked question requirement IDs. Model output never decides whether coverage passes.
+Practice mode shows flashcards one at a time, records confidence from 1 to 5, and prioritizes review with `(must ? 2 : 1) × difficulty × (6 − confidence)`. The **Weak spots** report groups rated cards by linked requirement and explains the score; unrated cards do not appear. **Interview Day Game Plan** gives a short role recap, key role priorities, questions to ask, and a ready-to-go checklist. Its checklist progress is stored in the current browser per kit.
 
 ## Editing and regeneration
 
-Requirements, questions, flashcards, the company brief, and schedule days carry additive metadata: `source` (`generated`, `user_edited`, or `user_created`), `pinned`, and `version`. Content edits pin an item and increment its version; hand-added questions/cards are pinned at creation. Reordering and moving a question between categories leave its metadata unchanged. Deletion removes the item and its schedule references. Regeneration has dedicated brief, question-category, and schedule operations; pinned items survive, eligible generated content is replaced, and question regeneration rechecks coverage. The browser updates optimistically and restores the prior state if a save fails.
-
-Practice mode reveals cards one at a time, records confidence from 1 to 5, and sorts the next review by `(must ? 2 : 1) × difficulty × (6 − confidence)`, so low-confidence, difficult, must-have topics surface first. The Weak Spots report groups that same deterministic score by requirement so someone preparing can see what to revisit first, instead of treating every forgotten card as equally urgent.
+Requirements, questions, flashcards, the company brief, and schedule days carry metadata indicating whether content was generated, edited, or user-created, whether it is pinned, and its version. Editing pins the item and increments its version; user-created questions and cards start pinned. Reordering or moving a question keeps its metadata. Deleting an item also removes its schedule references. Dedicated actions regenerate the brief, a question category, or the schedule; pinned content is preserved, and question regeneration rechecks coverage. The browser updates optimistically and restores the prior state if saving fails.
 
 ## Security and failure handling
 
-Passwords are bcrypt-hashed. A signed JWT lives in an httpOnly cookie; production requires `JWT_SECRET` and uses a secure cookie. Kit queries always include the authenticated owner ID. Incoming kit changes are Zod-validated, auth and generation routes are rate-limited, CORS is restricted to `WEB_ORIGIN`, and server errors return structured messages. External fetches require HTTP(S), check DNS-resolved addresses against private/loopback ranges, recheck redirects, accept HTML only, and cap response size. Fetched text and the JD are sent as data in user messages, while system prompts explicitly prohibit following instructions found inside that data.
+Passwords are bcrypt-hashed. Authentication uses an httpOnly signed JWT cookie, and production requires `JWT_SECRET` and secure cookies. Kit queries are scoped to the authenticated owner. Incoming changes are Zod-validated, authentication and generation routes are rate-limited, and CORS is restricted to `WEB_ORIGIN`. External fetches require HTTP(S), reject private and loopback IPs after DNS resolution, recheck redirects, accept HTML only, and cap response size. Retrieved pages and job descriptions are treated as untrusted data in generation prompts.
 
-A failed company fetch is a skipped source, not a fatal pipeline failure. A thin JD produces a thin kit. No public discussion produces an honest empty-research note. A case is `failed` only when no kit can be generated at all.
+A failed company-page fetch is skipped rather than failing the whole pipeline. A short job description may produce a limited kit. Lack of public discussion results is disclosed. A case is marked failed if generation fails or the required `must` coverage check still fails after the second pass.
 
-## Tests and commands
+## Build and checks
 
 ```sh
 npm run typecheck
@@ -87,15 +121,41 @@ npm test
 npm run build
 ```
 
-The core tests cover exact day counts and long/short schedule edges, requirement coverage, priority classification, and Appendix A structure and references.
+Core tests cover requirement priority and coverage, Appendix A structure and references, and schedule edge cases such as one day and more days than questions.
 
 ## Deployment
 
-Deploy `packages/web` and `packages/server` as separate services with the same MongoDB database. Set the documented environment variables in each host's secret manager; set `WEB_ORIGIN` to the deployed frontend origin and `NEXT_PUBLIC_API_URL` to the deployed API's `/api` URL. Never enable `ALLOW_LOCAL_FETCH` on the web service. The public deployment itself requires hosting and database credentials, which are not part of this repository.
+Deploy the frontend and API as separate services from this monorepo. Deploy `packages/core` as part of each service's build; it is not a standalone service. Keep all secret values in the hosting providers' environment-variable settings, never in frontend code or committed files.
+
+### API on Render
+
+- Create a Web Service from the repository and leave **Root Directory** blank so Render checks out the repository root and can access all npm workspaces.
+- Build command:
+
+  ```sh
+  npm ci && npm run build --workspace @interview-prep/core && npm run build --workspace @interview-prep/server
+  ```
+
+- Start command:
+
+  ```sh
+  node packages/server/dist/index.js
+  ```
+
+- Set `OPENAI_API_KEY`, `OPENAI_MODEL`, `TAVILY_API_KEY`, `MONGODB_URI`, `JWT_SECRET`, and `WEB_ORIGIN`. Render supplies `PORT`. `WEB_ORIGIN` must exactly match the deployed frontend origin, without a trailing slash. Keep `ALLOW_LOCAL_FETCH=false`.
+
+### Web app on Vercel
+
+- Import the same repository as a Vercel project and set **Root Directory** to `packages/web`.
+- Enable **Include source files outside of the Root Directory in the Build Step** so the web build can use the shared `packages/core` workspace.
+- Build command: `npm run build`. The web workspace's `prebuild` script builds `packages/core` first.
+- Set `NEXT_PUBLIC_API_URL` to the Render API URL ending in `/api`, for example `https://your-api.onrender.com/api`. This value is embedded at build time, so redeploy the frontend after changing it.
+
+The deployed web origin must also be set as `WEB_ORIGIN` on Render. Confirm the API health endpoint responds at `https://your-api.onrender.com/api/health`, then try account registration and sign-in from the deployed frontend.
 
 ## Known limitations
 
-- The crawler handles static HTML and does not execute client-side JavaScript.
-- Public discussion search uses Tavily and requires a free `TAVILY_API_KEY`; without it the pipeline reports that no public discussion was found. Up to three result URLs and snippets are passed through as evidence.
-- The crawler has bounded retries and page limits. Completed pipeline-step results and progress are stored; if the server restarts during a run, it safely replays that case from the beginning.
-- The batch CSV upload in the web interface expects a header row with `id,jd,company_url,days`; the assessment CLI contract is JSON as specified in Section 9 and Appendix B.
+- The crawler processes static HTML and does not run client-side JavaScript.
+- Public interview-discussion search requires a Tavily API key. Without one, the pipeline marks that research as unavailable; it does not claim to have searched.
+- Crawling and retries are bounded. If the server restarts during generation, the case is replayed from the beginning.
+- The web interface's batch upload accepts CSV with the header `id,jd,company_url,days`; the assessment CLI uses the JSON contract described above.
