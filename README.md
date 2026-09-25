@@ -9,7 +9,7 @@ A full-stack app that turns a pasted job description, company website, and inter
 - **Persistence:** MongoDB with Mongoose
 - **Generation:** OpenAI Chat Completions API, default model `gpt-4o-mini`
 - **Validation:** Zod
-- **Research:** bounded HTML crawl with robots.txt checks; optional Brave Search API for public interview discussion
+- **Research:** bounded HTML crawl with robots.txt checks; Tavily Search API for public interview discussion
 
 This is an npm workspaces monorepo. `packages/core` owns the kit contract, deterministic rules, retrieval helpers, and generation pipeline. Both the Express API and `packages/cli` import this package directly. The batch path therefore runs the same `generateKit` implementation as web requests instead of maintaining a second pipeline.
 
@@ -21,7 +21,7 @@ Install Node.js 20+ and MongoDB, then from the repository root:
 npm install
 ```
 
-Copy `.env.example` to `.env` and set `OPENAI_API_KEY`, `JWT_SECRET`, and `MONGODB_URI`. `BRAVE_SEARCH_API_KEY` is optional; without it the app records that no public discussion was found. The browser API address defaults to `http://localhost:4000/api`.
+Copy `.env.example` to `.env` and set `OPENAI_API_KEY`, `TAVILY_API_KEY`, `JWT_SECRET`, and `MONGODB_URI`. Tavily's free tier currently includes 1,000 monthly credits and does not require a credit card. The browser API address defaults to `http://localhost:4000/api`.
 
 Run the API and web app in separate terminals:
 
@@ -40,17 +40,19 @@ The required command is:
 npm run evaluate -- --input cases.json --output kits.json
 ```
 
-The input is an array of `{ "id": string, "jd": string, "company_url": string, "days": number }`. Output is `{ "version": "1.0", "generated_at": ISO timestamp, "kits": [...] }`, where every case gets either `{id,status:"ok",kit,error:null}` or `{id,status:"failed",kit:null,error:{code,message}}`. The CLI continues after a failed case and uses the shared core pipeline. For local HTTP fixtures only, set `ALLOW_LOCAL_FETCH=true` in the environment before running the command; the web API never enables this exception.
+The input is an array of `{ "id": string, "jd": string, "company_url": string, "days": number }`. Output is `{ "version": "1.0", "generated_at": ISO timestamp, "kits": [...] }`, where every case gets either `{id,status:"ok",kit,error:null}` or `{id,status:"failed",kit:null,error:{code,message}}`. Successful kits are serialized with only the Appendix A fields; edit-state metadata remains internal to the application and is not added to batch output. The CLI continues after a failed case and uses the shared core pipeline. For local HTTP fixtures only, set `ALLOW_LOCAL_FETCH=true` in the environment before running the command; the web API never enables this exception.
+
+Copy `.env.example` to `.env` before running the CLI and set `OPENAI_API_KEY` and `TAVILY_API_KEY`. MongoDB and `JWT_SECRET` are needed by the web API, not by batch generation.
 
 ## Kit contract and pipeline
 
-`packages/core/src/kit-schema.ts` implements Appendix A without renaming its required fields. Zod validates integer `jd_chars`, `minutes`, and `difficulty`; allowed requirement/question enums; and that every question or flashcard requirement reference and every scheduled question reference resolves. Unknown additive fields pass through so edit metadata is retained.
+`packages/core/src/kit-schema.ts` validates the Appendix A fields and the application's optional edit-state metadata. Unknown additive fields pass through internally so edit metadata is retained. The batch CLI projects validated kits to the exact Appendix A field set before writing its output.
 
 The pipeline is deliberately staged and reports progress:
 
 1. Extract requirements, role title, seniority, and responsibilities from the pasted JD only. A deterministic phrase classifier marks explicit required language `must`, explicit preferred/bonus language `nice`, and ambiguity `nice`.
 2. Check robots.txt and crawl same-host links using breadth-first traversal, relevance ranking, depth two, a 15-page cap, and a 2 MB per-page cap. Failed pages are skipped.
-3. Search optional public discussion results and include them as evidence; if the search key is absent or returns nothing, the brief says so rather than inventing a process.
+3. Search Tavily for independent public interview discussions, exclude the company's own domain, and include result URLs and snippets as evidence. If the key is absent or no results are found, the brief says so rather than inventing a process.
 4. Generate the company brief from retrieved text and discussion snippets.
 5. Generate questions per requirement with a category-specific prompt. Calls are sequential, which caps model concurrency at one and avoids token bursts. Hiring evidence is included in question generation.
 6. Allocate questions to the requested number of days in deterministic code.
@@ -94,6 +96,6 @@ Deploy `packages/web` and `packages/server` as separate services with the same M
 ## Known limitations
 
 - The crawler handles static HTML and does not execute client-side JavaScript.
-- Public discussion search requires an optional Brave Search API key. Up to three returned pages are fetched and cleaned, with provider snippets as a fallback.
+- Public discussion search uses Tavily and requires a free `TAVILY_API_KEY`; without it the pipeline reports that no public discussion was found. Up to three result URLs and snippets are passed through as evidence.
 - The crawler has bounded retries and page limits. Completed pipeline-step results and progress are stored; if the server restarts during a run, it safely replays that case from the beginning.
 - The batch CSV upload in the web interface expects a header row with `id,jd,company_url,days`; the assessment CLI contract is JSON as specified in Section 9 and Appendix B.

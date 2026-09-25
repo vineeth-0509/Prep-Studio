@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
+import { randomUUID } from "node:crypto";
 const rootEnv = resolve(process.cwd(), "../../.env");
 dotenv.config({ path: process.env.ENV_FILE || (existsSync(rootEnv) ? rootEnv : resolve(process.cwd(), ".env")) });
 import express, { type NextFunction, type Request, type Response } from "express";
@@ -100,7 +101,17 @@ app.get("/api/auth/me", authenticate, asyncHandler<AuthedRequest>(async (req, re
 
 app.get("/api/kits", authenticate, asyncHandler<AuthedRequest>(async (req, res) => {
   const kits = await KitModel.find({ owner_id: req.userId }).sort({ createdAt: -1 }).select("status current_step steps_completed kit.source kit.role.title error createdAt");
-  return res.json({ kits });
+  return res.json({ kits: kits.map((record) => {
+    const kit = record.get("kit") as Kit | undefined;
+    return {
+      id: String(record._id),
+      status: record.get("status"),
+      current_step: record.get("current_step"),
+      steps_completed: record.get("steps_completed"),
+      kit: kit ? { source: kit.source, role: { title: kit.role.title } } : undefined,
+      error: record.get("error"),
+    };
+  }) });
 }));
 app.post("/api/kits", authenticate, generationLimiter, asyncHandler<AuthedRequest>(async (req, res) => {
   const { jd, company_url: companyUrl, days } = req.body ?? {};
@@ -152,12 +163,15 @@ app.post("/api/kits/:id/regenerate", authenticate, asyncHandler<AuthedRequest>(a
   try {
     const updated = structuredClone(original) as Kit;
     if (section === "company_brief") {
-      if (!(updated.company_brief as any).meta?.pinned) updated.company_brief = await regenerateCompanyBrief(String(record.get("company_url")));
+      // Clicking regenerate is an explicit request to replace even a previously edited brief.
+      updated.company_brief = await regenerateCompanyBrief(String(record.get("company_url") || original.source.company_url));
     } else if (section === "question_category") {
       const categoryQuestions = updated.questions.filter((question) => question.category === category);
       const pinned = categoryQuestions.filter((question) => (question as any).meta?.pinned);
       const other = updated.questions.filter((question) => question.category !== category);
-      const generated = (await regenerateCategoryQuestions(String(record.get("jd")), String(record.get("company_url")), updated.role.requirements, category as Kit["questions"][number]["category"])).map((question, index) => ({ ...question, id: `qregen${Date.now()}${index}` }));
+      const generatedQuestions = await regenerateCategoryQuestions(String(record.get("jd") || ""), String(record.get("company_url") || original.source.company_url), updated.role.requirements, category as Kit["questions"][number]["category"]);
+      if (!generatedQuestions.length) throw new Error(`No ${category} questions were returned. Please try again.`);
+      const generated = generatedQuestions.map((question) => ({ ...question, id: `qregen_${randomUUID()}` }));
       updated.questions = [...other, ...pinned, ...generated];
       updated.coverage = checkCoverage(updated.role.requirements, updated.questions);
       updated.coverage.passes = Math.max(1, original.coverage.passes);

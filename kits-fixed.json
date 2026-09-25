@@ -1,0 +1,2012 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-09-25T06:25:23.229Z",
+  "kits": [
+    {
+      "id": "case-1",
+      "status": "ok",
+      "kit": {
+        "source": {
+          "company": "Amazon",
+          "company_url": "https://amazon.jobs",
+          "role": "Software Dev Engineer I",
+          "location": "",
+          "jd_chars": 1692,
+          "researched_at": "2026-09-25T06:22:29.286Z",
+          "pages_used": [
+            "https://amazon.jobs/en/",
+            "https://amazon.jobs/content/en/job-categories",
+            "https://amazon.jobs/content/en/job-categories",
+            "https://amazon.jobs/content/en/career-programs/military",
+            "https://amazon.jobs/content/en/how-we-hire",
+            "https://amazon.jobs/content/en/our-workplace",
+            "https://amazon.jobs/en",
+            "https://amazon.jobs/content/en/teams",
+            "https://amazon.jobs/content/en/locations",
+            "https://passport.amazon.jobs/",
+            "https://passport.amazon.jobs/",
+            "https://www.amazon.jobs/en/",
+            "https://amazon.jobs/content/en/how-we-hire/accommodations",
+            "https://amazon.jobs/content/en/benefits",
+            "https://amazon.jobs/content/en/our-workplace/inclusive-experiences"
+          ]
+        },
+        "company_brief": {
+          "summary": "Amazon offers diverse career opportunities across numerous job categories including software development, operations, logistics, customer service, and business development. The company emphasizes innovation, leadership, and a peculiar culture focused on customer obsession. Amazon values real-world skills from candidates, particularly from the military community, and offers programs that support veterans and their families. The hiring process at Amazon is structured and varies by role, typically involving an online application, assessments, and multiple interview rounds.",
+          "what_they_do": "Amazon is a multinational technology company that focuses on e-commerce, cloud computing, digital streaming, and artificial intelligence.",
+          "sources": [
+            "https://amazon.jobs/en/",
+            "https://amazon.jobs/content/en/job-categories",
+            "https://amazon.jobs/content/en/job-categories",
+            "https://amazon.jobs/content/en/career-programs/military",
+            "https://amazon.jobs/content/en/how-we-hire",
+            "https://amazon.jobs/content/en/our-workplace",
+            "https://amazon.jobs/en",
+            "https://amazon.jobs/content/en/teams",
+            "https://amazon.jobs/content/en/locations",
+            "https://passport.amazon.jobs/",
+            "https://passport.amazon.jobs/",
+            "https://www.amazon.jobs/en/",
+            "https://amazon.jobs/content/en/how-we-hire/accommodations",
+            "https://amazon.jobs/content/en/benefits",
+            "https://amazon.jobs/content/en/our-workplace/inclusive-experiences",
+            "https://blog.stackademic.com/my-amazon-software-development-engineer-new-grad-interview-experience-f16d4ccba896\nMy",
+            "https://igotanoffer.com/blogs/tech/amazon-software-development-engineer-interview\nAmazon",
+            "https://medium.com/@sshiwangi770/my-amazon-interview-experience-1ab2fd4f9e6f\nMy"
+          ]
+        },
+        "role": {
+          "title": "Software Dev Engineer I",
+          "seniority": "Entry Level",
+          "responsibilities": [
+            "Collaborate with cross-disciplinary teams to design and bring innovative products and services to market.",
+            "Design and build technologies in a large distributed computing environment.",
+            "Create solutions to run predictions on distributed systems at scale and speed.",
+            "Build distributed storage, index, and query systems that are scalable, fault-tolerant, low cost, and easy to manage.",
+            "Design and code solutions to broadly defined problems.",
+            "Work in an agile environment to deliver high-quality software."
+          ],
+          "requirements": [
+            {
+              "id": "r1",
+              "text": "Bachelor's degree or above in computer science, computer engineering, or a related field.",
+              "kind": "domain",
+              "priority": "nice"
+            },
+            {
+              "id": "r2",
+              "text": "Knowledge of object-oriented design, algorithms, data structures, problem solving, and complexity analysis.",
+              "kind": "technical",
+              "priority": "nice"
+            },
+            {
+              "id": "r3",
+              "text": "Knowledge of programming languages such as C/C++, Python, Java, or Perl.",
+              "kind": "technical",
+              "priority": "nice"
+            },
+            {
+              "id": "r4",
+              "text": "Previous technical internship(s).",
+              "kind": "behavioural",
+              "priority": "nice"
+            },
+            {
+              "id": "r5",
+              "text": "Experience with distributed, multi-tiered systems, algorithms, and relational databases.",
+              "kind": "technical",
+              "priority": "nice"
+            },
+            {
+              "id": "r6",
+              "text": "Experience in linear programming or nonlinear optimization.",
+              "kind": "technical",
+              "priority": "nice"
+            },
+            {
+              "id": "r7",
+              "text": "Ability to articulate technical challenges and solutions.",
+              "kind": "behavioural",
+              "priority": "nice"
+            },
+            {
+              "id": "r8",
+              "text": "Ability to handle ambiguous problems and think abstractly.",
+              "kind": "behavioural",
+              "priority": "nice"
+            }
+          ]
+        },
+        "questions": [
+          {
+            "id": "q1",
+            "requirement_ids": [
+              "r1"
+            ],
+            "category": "behavioural",
+            "prompt": "Can you describe a time when you faced a challenging problem while working on a software project? How did you approach the ambiguity and what was the outcome?",
+            "answer_outline": "The candidate should explain a specific instance where they encountered a complex issue, outlining the steps they took to analyze the problem, seek input, and implement a solution, concluding with the results and any learning experience.",
+            "difficulty": 2
+          },
+          {
+            "id": "q2",
+            "requirement_ids": [
+              "r1"
+            ],
+            "category": "system-design",
+            "prompt": "When designing a distributed system, how do you prioritize scalability, fault tolerance, and cost-effectiveness? Please provide an example of a system you designed and the trade-offs you had to consider.",
+            "answer_outline": "The candidate should discuss a specific distributed system they designed, detailing how they balanced scalability, reliability, and costs, as well as any challenges they encountered and decisions made during the design process.",
+            "difficulty": 3
+          },
+          {
+            "id": "q3",
+            "requirement_ids": [
+              "r2"
+            ],
+            "category": "technical",
+            "prompt": "Can you describe a project where you had to design an object-oriented system? What were the main challenges you faced in structuring your classes and objects, and how did you resolve them?",
+            "answer_outline": "In this project, I developed a system with multiple interacting classes. The main challenges included ensuring proper encapsulation and inheritance hierarchies. I resolved these by thoroughly defining interfaces and utilizing design patterns like Factory and Strategy. This facilitated easier maintenance and scalability.",
+            "difficulty": 2
+          },
+          {
+            "id": "q4",
+            "requirement_ids": [
+              "r2"
+            ],
+            "category": "technical",
+            "prompt": "Tell me about a time when you had to optimize an algorithm for efficiency. What was the original algorithm, what issues arose, and what steps did you take to improve its performance?",
+            "answer_outline": "I was tasked with sorting large datasets where the initial implementation used a simple bubble sort. It performed poorly with larger inputs. I switched to a merge sort algorithm, which improved time complexity from O(n^2) to O(n log n), significantly enhancing performance. Testing showed reduced processing time by over 50%.",
+            "difficulty": 3
+          },
+          {
+            "id": "q5",
+            "requirement_ids": [
+              "r3"
+            ],
+            "category": "technical",
+            "prompt": "Describe a project where you had to use either C++, Java or Python to solve a complex problem. What were the key design decisions you made, and how did you handle any challenges during the implementation?",
+            "answer_outline": "The candidate should outline a specific project, detailing the problem, their choice of programming language, design decisions (like algorithms, data structures utilized), and how they navigated challenges such as time constraints or bugs.",
+            "difficulty": 2
+          },
+          {
+            "id": "q6",
+            "requirement_ids": [
+              "r3"
+            ],
+            "category": "system-design",
+            "prompt": "How would you approach building a scalable and fault-tolerant distributed system? Can you discuss any specific technologies or architectures you would consider and the trade-offs involved in your choices?",
+            "answer_outline": "The candidate should provide a high-level overview of possible architectures (like microservices, event-driven architecture), key technologies (like AWS services), and discuss trade-offs such as consistency vs availability or complexity vs performance.",
+            "difficulty": 3
+          },
+          {
+            "id": "q7",
+            "requirement_ids": [
+              "r4"
+            ],
+            "category": "behavioural",
+            "prompt": "Can you describe a challenging technical problem you faced during your internship and how you approached solving it?",
+            "answer_outline": "The candidate should explain a specific situation where they encountered a difficult technical issue, describing the context, their thought process, the steps they took to resolve it, and the outcome. Emphasis should be on the skills used and lessons learned.",
+            "difficulty": 2
+          },
+          {
+            "id": "q8",
+            "requirement_ids": [
+              "r4"
+            ],
+            "category": "behavioural",
+            "prompt": "In a fast-paced development environment, how do you prioritize tasks when working on multiple projects that have competing deadlines?",
+            "answer_outline": "The candidate should discuss their strategy for managing time and resources, including techniques for task prioritization (like Agile methodologies), communication with stakeholders, and adapting to changes. Real scenarios from their past experiences would strengthen their response.",
+            "difficulty": 2
+          },
+          {
+            "id": "q9",
+            "requirement_ids": [
+              "r5"
+            ],
+            "category": "system-design",
+            "prompt": "Can you describe a project where you had to implement a distributed, multi-tiered system? What challenges did you face and how did you overcome them?",
+            "answer_outline": "Discuss the specific project, the architecture of the distributed system, the roles of various tiers, any challenges related to data consistency or communication between tiers, and the strategies used to resolve these issues.",
+            "difficulty": 2
+          },
+          {
+            "id": "q10",
+            "requirement_ids": [
+              "r5"
+            ],
+            "category": "system-design",
+            "prompt": "In building a scalable system that uses relational databases, what trade-offs would you consider when choosing between a traditional SQL database and a NoSQL database?",
+            "answer_outline": "Address scalability concerns, consistency vs. availability, ease of use, transaction support, and how these factors align with the specific use-case being addressed.",
+            "difficulty": 2
+          },
+          {
+            "id": "q11",
+            "requirement_ids": [
+              "r6"
+            ],
+            "category": "technical",
+            "prompt": "Can you describe a project where you applied linear programming or nonlinear optimization techniques? What was the problem you were trying to solve, and what were the trade-offs in your chosen approach?",
+            "answer_outline": "I worked on a project optimizing supply chain logistics. I formulated a linear programming model to minimize costs while meeting demand. A major trade-off was between cost efficiency and speed; optimizing for speed increased costs. Ultimately, I prioritized cost efficiency due to budget constraints, allowing for better investment in other areas.",
+            "difficulty": 2
+          },
+          {
+            "id": "q12",
+            "requirement_ids": [
+              "r6"
+            ],
+            "category": "system-design",
+            "prompt": "How would you approach designing a distributed system for solving complex optimization problems at scale? What design considerations and trade-offs would you take into account?",
+            "answer_outline": "I would start by breaking down the optimization problem into smaller, manageable tasks and distribute them across nodes. Key design considerations would include data consistency, fault tolerance, and load balancing. A trade-off could be between complexity and performance; a more complex system may provide better optimization but could be harder to manage.",
+            "difficulty": 3
+          },
+          {
+            "id": "q13",
+            "requirement_ids": [
+              "r7"
+            ],
+            "category": "behavioural",
+            "prompt": "Can you describe a time when you faced a significant technical challenge during a project? How did you articulate the problem and the solution to your team?",
+            "answer_outline": "The candidate should describe a specific situation (Situation), explaining the challenge (Task) they faced, the actions they took to address it (Action), and the outcome or resolution of the challenge (Result).",
+            "difficulty": 2
+          },
+          {
+            "id": "q14",
+            "requirement_ids": [
+              "r7"
+            ],
+            "category": "behavioural",
+            "prompt": "Imagine you are working on a distributed storage system and you encounter performance issues under load. How would you analyze the problem and communicate your proposed solutions to stakeholders?",
+            "answer_outline": "The candidate should outline how they would first gather data to diagnose the performance issues (analysis phase), propose potential solutions (like optimizing algorithms or load balancing), and clearly communicate these insights and recommendations to both technical and non-technical stakeholders.",
+            "difficulty": 3
+          },
+          {
+            "id": "q15",
+            "requirement_ids": [
+              "r8"
+            ],
+            "category": "behavioural",
+            "prompt": "Can you describe a past project where you faced significant ambiguity? How did you approach the situation, and what strategies did you use to clarify the requirements and move forward?",
+            "answer_outline": "The candidate should detail a specific project, highlighting the ambiguity encountered, the methods used to gather information or insights (like stakeholder interviews or research), and the final outcomes or lessons learned.",
+            "difficulty": 2
+          },
+          {
+            "id": "q16",
+            "requirement_ids": [
+              "r8"
+            ],
+            "category": "behavioural",
+            "prompt": "Imagine you're tasked with developing a new feature in a distributed system but the requirements are not clearly defined. How would you prioritize your approach to ensure meaningful progress without full clarity?",
+            "answer_outline": "The candidate should discuss iterative development methods, like agile principles or MVPs, emphasize collaboration with team members for insights, and elaborate on how they might gather feedback to refine requirements as the project progresses.",
+            "difficulty": 3
+          },
+          {
+            "id": "q17",
+            "requirement_ids": [],
+            "category": "company-fit",
+            "prompt": "What drives your motivation to work as a Software Development Engineer at Amazon, and how do you believe this aligns with Amazon's culture of customer obsession and innovation?",
+            "answer_outline": "Look for a response that emphasizes a passion for technology, a desire to impact customer experience, and a commitment to innovation, which aligns with Amazon's focus on building for customers.",
+            "difficulty": 2
+          },
+          {
+            "id": "q18",
+            "requirement_ids": [],
+            "category": "company-fit",
+            "prompt": "Can you describe a complex problem you solved in a previous project, particularly focusing on how you approached ambiguity and collaborated with cross-disciplinary teams, and how that experience prepares you for this role at Amazon?",
+            "answer_outline": "Expect the candidate to explain a specific challenging problem, their problem-solving process, teamwork, and how these experiences will help them work effectively in the diverse, fast-paced environment at Amazon.",
+            "difficulty": 3
+          }
+        ],
+        "flashcards": [
+          {
+            "id": "f1",
+            "front": "What educational qualifications are generally required for a technical position in computer science?",
+            "back": "Bachelor's degree or above in computer science, computer engineering, or a related field.",
+            "requirement_ids": [
+              "r1"
+            ]
+          },
+          {
+            "id": "f2",
+            "front": "Which concepts should a candidate be familiar with in object-oriented design?",
+            "back": "Knowledge of object-oriented design, algorithms, data structures, problem solving, and complexity analysis.",
+            "requirement_ids": [
+              "r2"
+            ]
+          },
+          {
+            "id": "f3",
+            "front": "What programming languages should a candidate know for technical roles?",
+            "back": "Knowledge of programming languages such as C/C++, Python, Java, or Perl.",
+            "requirement_ids": [
+              "r3"
+            ]
+          },
+          {
+            "id": "f4",
+            "front": "What past experiences can strengthen a candidate's application for a technical internship?",
+            "back": "Previous technical internship(s).",
+            "requirement_ids": [
+              "r4"
+            ]
+          },
+          {
+            "id": "f5",
+            "front": "What type of systems experience is beneficial for technical candidates?",
+            "back": "Experience with distributed, multi-tiered systems, algorithms, and relational databases.",
+            "requirement_ids": [
+              "r5"
+            ]
+          },
+          {
+            "id": "f6",
+            "front": "In what areas of programming should a candidate's experience include for optimization problems?",
+            "back": "Experience in linear programming or nonlinear optimization.",
+            "requirement_ids": [
+              "r6"
+            ]
+          },
+          {
+            "id": "f7",
+            "front": "What ability is crucial for articulating complex technical challenges?",
+            "back": "Ability to articulate technical challenges and solutions.",
+            "requirement_ids": [
+              "r7"
+            ]
+          },
+          {
+            "id": "f8",
+            "front": "What skill involves dealing with uncertainty in problem-solving?",
+            "back": "Ability to handle ambiguous problems and think abstractly.",
+            "requirement_ids": [
+              "r8"
+            ]
+          }
+        ],
+        "schedule": {
+          "days_available": 5,
+          "days": [
+            {
+              "day": 1,
+              "focus": "Company fit: role motivation, products, customers · Behavioural (STAR): Ability to articulate technical, solutions · Technical: object-oriented design, algorithms, data structures · System design: linear programming or nonlinear",
+              "question_ids": [
+                "q18",
+                "q14",
+                "q4",
+                "q12"
+              ],
+              "minutes": 100
+            },
+            {
+              "day": 2,
+              "focus": "Behavioural (STAR): Ability to handle ambiguous, think abstractly · Technical: linear programming or nonlinear, object-oriented design, algorithms · System design: distributed, multi-tiered systems, algorithms",
+              "question_ids": [
+                "q16",
+                "q11",
+                "q3",
+                "q9"
+              ],
+              "minutes": 70
+            },
+            {
+              "day": 3,
+              "focus": "Behavioural (STAR): Ability to articulate technical, solutions · Technical: programming languages such as, Python, Java · System design: Bachelor's degree or above, computer engineering, a related field",
+              "question_ids": [
+                "q2",
+                "q13",
+                "q5"
+              ],
+              "minutes": 55
+            },
+            {
+              "day": 4,
+              "focus": "Behavioural (STAR): Ability to handle ambiguous, think abstractly, Previous technical internship(s) · System design: programming languages such as, Python, Java",
+              "question_ids": [
+                "q6",
+                "q15",
+                "q7"
+              ],
+              "minutes": 55
+            },
+            {
+              "day": 5,
+              "focus": "Company fit: role motivation, products, customers · Behavioural (STAR): Bachelor's degree or above, computer engineering, a related field, Previous technical internship(s) · System design: distributed, multi-tiered systems, algorithms",
+              "question_ids": [
+                "q1",
+                "q10",
+                "q17",
+                "q8"
+              ],
+              "minutes": 60
+            }
+          ]
+        },
+        "coverage": {
+          "uncovered_requirement_ids": [],
+          "passes": 1
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "case-2",
+      "status": "ok",
+      "kit": {
+        "source": {
+          "company": "Mastercard",
+          "company_url": "https://careers.mastercard.com/",
+          "role": "AI Engineer",
+          "location": "",
+          "jd_chars": 633,
+          "researched_at": "2026-09-25T06:23:01.403Z",
+          "pages_used": [
+            "https://careers.mastercard.com/us/en/",
+            "https://careers.mastercard.com/us/en",
+            "https://careers.mastercard.com/us/en/fraud-alert"
+          ]
+        },
+        "company_brief": {
+          "summary": "Mastercard is a global technology company in the payments space, driven by a passion for innovation and a commitment to building a sustainable economy where everyone prospers. They are dedicated to empowering people and powering economies. Mastercard is an inclusive employer, committed to supporting the health and wellbeing of their workforce, and has a clear process to address recruitment fraud threats.",
+          "what_they_do": "Mastercard operates as a technology company focused on payment solutions.",
+          "sources": [
+            "https://careers.mastercard.com/us/en/",
+            "https://careers.mastercard.com/us/en",
+            "https://careers.mastercard.com/us/en/fraud-alert",
+            "https://www.glassdoor.ie/Interview/Mastercard-Developer-Interview-Questions-EI_IE3677.0,10_KO11,20.htm\nMastercard",
+            "https://www.interviewsense.org/opportunities/mastercard-software-engineer-launch-program-full-time-vancouver-sye5bq\nMastercard",
+            "https://www.reddit.com/r/SoftwareEngineerJobs/comments/1wch2ty/mastercard_interview\nMastercard"
+          ]
+        },
+        "role": {
+          "title": "AI Engineer",
+          "seniority": "Not specified",
+          "responsibilities": [],
+          "requirements": [
+            {
+              "id": "r1",
+              "text": "Experience designing, developing, and deploying AI, Generative AI, or machine learning solutions in production.",
+              "kind": "technical",
+              "priority": "nice"
+            },
+            {
+              "id": "r2",
+              "text": "Hands-on experience building LLM applications, Agentic AI systems, and RAG architectures from concept through deployment.",
+              "kind": "technical",
+              "priority": "nice"
+            },
+            {
+              "id": "r3",
+              "text": "Expertise with GenAI frameworks and tools such as OpenAI, Azure OpenAI, Gemini, Hugging Face, LangChain, LangGraph, and open-source foundation models.",
+              "kind": "technical",
+              "priority": "nice"
+            },
+            {
+              "id": "r4",
+              "text": "Understanding of prompt engineering, vector embeddings, semantic search, agent orchestration, reasoning frameworks, and AI application architecture.",
+              "kind": "technical",
+              "priority": "nice"
+            }
+          ]
+        },
+        "questions": [
+          {
+            "id": "q1",
+            "requirement_ids": [
+              "r1"
+            ],
+            "category": "behavioural",
+            "prompt": "Can you describe a specific project where you designed and deployed a machine learning solution in production? What challenges did you encounter and how did you overcome them?",
+            "answer_outline": "The candidate should detail a specific project, including technologies used, design decisions made, and the deployment strategy. They should discuss challenges such as data quality issues, scaling problems, or integrating the model into existing systems and explain their problem-solving approach.",
+            "difficulty": 2
+          },
+          {
+            "id": "q2",
+            "requirement_ids": [
+              "r1"
+            ],
+            "category": "system-design",
+            "prompt": "When building an LLM application, what trade-offs do you consider between accuracy and computational efficiency? Can you give an example of a decision you made based on these factors?",
+            "answer_outline": "The candidate should explain the balance between achieving high accuracy of LLM predictions versus the computational cost in terms of time and resources. They should provide a specific example that illustrates their decision-making process and how they justified their approach in a real-world context.",
+            "difficulty": 3
+          },
+          {
+            "id": "q3",
+            "requirement_ids": [
+              "r2"
+            ],
+            "category": "system-design",
+            "prompt": "Can you describe a specific project where you built and deployed a Language Model application? What were the biggest challenges you faced during the deployment, and how did you address them?",
+            "answer_outline": "The candidate should outline a specific project involving Language Models, detailing the deployment process. Important challenges may include performance issues, scaling problems, or integration with existing systems. The response should reflect problem-solving skills and practical experience with deployment.",
+            "difficulty": 2
+          },
+          {
+            "id": "q4",
+            "requirement_ids": [
+              "r2"
+            ],
+            "category": "system-design",
+            "prompt": "In building an Agentic AI system with a RAG architecture, what trade-offs did you encounter in terms of accuracy versus processing efficiency? How did you decide which direction to take?",
+            "answer_outline": "The candidate should explain the trade-offs between maintaining high accuracy in the AI system versus optimizing for processing efficiency. Key considerations may involve resource utilization, user experience, and application requirements. They should demonstrate their decision-making process and the impact of their choices.",
+            "difficulty": 3
+          },
+          {
+            "id": "q5",
+            "requirement_ids": [
+              "r3"
+            ],
+            "category": "technical",
+            "prompt": "Can you describe a project where you implemented a Generative AI or machine learning solution? What tools did you use, and what challenges did you face during the deployment?",
+            "answer_outline": "The candidate should detail a specific project, focusing on the AI framework used (e.g., OpenAI, Hugging Face), the deployment process, and any issues encountered, such as data challenges or integration difficulties, along with how they resolved those issues.",
+            "difficulty": 2
+          },
+          {
+            "id": "q6",
+            "requirement_ids": [
+              "r3"
+            ],
+            "category": "system-design",
+            "prompt": "When designing an AI application using tools like LangChain or Azure OpenAI, how do you decide which architecture or framework is best suited for the specific use case? Can you provide an example that highlights your decision-making process?",
+            "answer_outline": "The candidate should articulate their thought process regarding selecting tools and frameworks, including considerations like scalability, ease of integration, performance, and cost. An example should illustrate these trade-offs in a real-world scenario.",
+            "difficulty": 3
+          },
+          {
+            "id": "q7",
+            "requirement_ids": [
+              "r4"
+            ],
+            "category": "behavioural",
+            "prompt": "Can you describe a specific project where you utilized prompt engineering to improve the performance of a machine learning model? What challenges did you face and how did you address them?",
+            "answer_outline": "The candidate should illustrate a past project that involved prompt engineering, detailing how prompts were crafted, issues faced (e.g., inadequate outputs, model bias), and solutions implemented (e.g., iterating on prompts, using larger datasets).",
+            "difficulty": 2
+          },
+          {
+            "id": "q8",
+            "requirement_ids": [
+              "r4"
+            ],
+            "category": "system-design",
+            "prompt": "When designing an AI application that utilizes vector embeddings and semantic search, how would you approach balancing the trade-off between accuracy and computational efficiency?",
+            "answer_outline": "The candidate should discuss specific strategies for optimizing the model, such as selecting between more complex embeddings for accuracy versus simpler models for efficiency, and the impact of these choices on user experience and system performance.",
+            "difficulty": 2
+          },
+          {
+            "id": "q9",
+            "requirement_ids": [],
+            "category": "company-fit",
+            "prompt": "What motivates you to work on AI and machine learning projects, particularly in the context of enhancing customer experience in the payments industry?",
+            "answer_outline": "The candidate should express a passion for technology and innovation, emphasizing how AI/ML can transform customer experiences. They may reference specific interests in generative AI or practical applications that can improve efficiencies in payments.",
+            "difficulty": 2
+          },
+          {
+            "id": "q10",
+            "requirement_ids": [],
+            "category": "company-fit",
+            "prompt": "Can you describe a time when you applied your strengths in developing an AI solution? How do you believe these strengths align with the requirements for this AI Engineer role at Mastercard?",
+            "answer_outline": "Candidates should provide an example highlighting their technical skills in AI development, such as working with LLMs or generative AI. They should also connect their strengths (possibly collaboration, problem-solving, or technical expertise) to specific responsibilities mentioned in the job description.",
+            "difficulty": 2
+          }
+        ],
+        "flashcards": [
+          {
+            "id": "f1",
+            "front": "What experience do you have with designing, developing, or deploying AI or machine learning solutions in production?",
+            "back": "I have worked on several projects where I designed and implemented AI solutions, including generative AI systems, which involved deploying them in production environments.",
+            "requirement_ids": [
+              "r1"
+            ]
+          },
+          {
+            "id": "f2",
+            "front": "Can you describe your experience with building LLM applications and Agentic AI systems?",
+            "back": "I have hands-on experience with building LLM applications from concept to deployment, including the use of RAG architectures to enhance performance.",
+            "requirement_ids": [
+              "r2"
+            ]
+          },
+          {
+            "id": "f3",
+            "front": "What GenAI frameworks and tools are you familiar with?",
+            "back": "I have expertise in using frameworks like OpenAI, Azure OpenAI, and Hugging Face, as well as tools such as LangChain and LangGraph for developing AI solutions.",
+            "requirement_ids": [
+              "r3"
+            ]
+          },
+          {
+            "id": "f4",
+            "front": "How do you approach prompt engineering and vector embeddings in AI applications?",
+            "back": "I focus on understanding user intent, utilizing vector embeddings for semantic search, and implementing effective agent orchestration in my AI application architecture.",
+            "requirement_ids": [
+              "r4"
+            ]
+          }
+        ],
+        "schedule": {
+          "days_available": 10,
+          "days": [
+            {
+              "day": 1,
+              "focus": "Company fit: role motivation, products, customers · Behavioural (STAR): Experience designing, developing, deploying AI · Technical: Expertise with GenAI frameworks, tools such as OpenAI, Azure OpenAI · System design: Experience designing, developing, deploying AI",
+              "question_ids": [
+                "q10",
+                "q1",
+                "q5",
+                "q2"
+              ],
+              "minutes": 70
+            },
+            {
+              "day": 2,
+              "focus": "System design: Hands-on experience building LLM, Agentic AI systems, RAG architectures from concept",
+              "question_ids": [
+                "q4"
+              ],
+              "minutes": 25
+            },
+            {
+              "day": 3,
+              "focus": "System design: Expertise with GenAI frameworks, tools such as OpenAI, Azure OpenAI",
+              "question_ids": [
+                "q6"
+              ],
+              "minutes": 25
+            },
+            {
+              "day": 4,
+              "focus": "System design: Hands-on experience building LLM, Agentic AI systems, RAG architectures from concept",
+              "question_ids": [
+                "q3"
+              ],
+              "minutes": 15
+            },
+            {
+              "day": 5,
+              "focus": "Behavioural (STAR): prompt engineering, vector embeddings, semantic search",
+              "question_ids": [
+                "q7"
+              ],
+              "minutes": 15
+            },
+            {
+              "day": 6,
+              "focus": "System design: prompt engineering, vector embeddings, semantic search",
+              "question_ids": [
+                "q8"
+              ],
+              "minutes": 15
+            },
+            {
+              "day": 7,
+              "focus": "Company fit: role motivation, products, customers",
+              "question_ids": [
+                "q9"
+              ],
+              "minutes": 15
+            },
+            {
+              "day": 8,
+              "focus": "System design: Experience designing, developing, deploying AI",
+              "question_ids": [
+                "q2"
+              ],
+              "minutes": 25
+            },
+            {
+              "day": 9,
+              "focus": "System design: Experience designing, developing, deploying AI",
+              "question_ids": [
+                "q2"
+              ],
+              "minutes": 25
+            },
+            {
+              "day": 10,
+              "focus": "System design: Experience designing, developing, deploying AI",
+              "question_ids": [
+                "q2"
+              ],
+              "minutes": 25
+            }
+          ]
+        },
+        "coverage": {
+          "uncovered_requirement_ids": [],
+          "passes": 1
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "case-3",
+      "status": "ok",
+      "kit": {
+        "source": {
+          "company": "Qualys",
+          "company_url": "https://www.qualys.com/careers",
+          "role": "Software Engineer",
+          "location": "",
+          "jd_chars": 1440,
+          "researched_at": "2026-09-25T06:23:33.862Z",
+          "pages_used": [
+            "https://www.qualys.com/careers"
+          ]
+        },
+        "company_brief": {
+          "summary": "Qualys is currently hiring for various roles with a pay range of $155K to $180K, although specific roles and the current hiring volume are not detailed. The interview process generally includes a recruiter screen followed by technical interviews, and there's an emphasis on skills in cloud security, compliance automation, and DevSecOps practices during interviews. However, specific data on their interview process is unavailable.",
+          "what_they_do": "Qualys specializes in vulnerability management and security compliance, focusing on cloud security and compliance automation.",
+          "sources": [
+            "https://www.qualys.com/careers",
+            "https://scoutify.com/companies/qualys/interview\nQualys",
+            "https://prepfully.com/interview-questions/qualys/full-stack-software-engineer?page=5\nQualys",
+            "https://www.linkedin.com/posts/prominentacademy_one-of-our-students-recently-appeared-activity-7363775712421371904-fHTX\nQualys"
+          ]
+        },
+        "role": {
+          "title": "Software Engineer",
+          "seniority": "Entry-Level to Mid-Level",
+          "responsibilities": [
+            "text: Analyze, design, code, and debug security software for Windows.\nkind: technical\ncontext: Responsibilities -",
+            "text: Maintain, support, and enhance existing systems and platforms.\nkind: technical\ncontext: Responsibilities -",
+            "text: Recommend continuous improvements.\nkind: behavioural\ncontext: Responsibilities -",
+            "text: Work with engineers to apply development best practices.\nkind: behavioural\ncontext: Responsibilities -",
+            "text: Collaborate with senior engineers and architects to implement features and resolve defects.\nkind: behavioural\ncontext: Responsibilities -"
+          ],
+          "requirements": [
+            {
+              "id": "r1",
+              "text": "Bachelor's degree in Computer Science or a related field.",
+              "kind": "domain",
+              "priority": "must"
+            },
+            {
+              "id": "r2",
+              "text": "1 to 3 years of hands-on experience developing software products.",
+              "kind": "domain",
+              "priority": "must"
+            },
+            {
+              "id": "r3",
+              "text": "At least 1 year of C++ programming in a Windows environment.",
+              "kind": "technical",
+              "priority": "must"
+            },
+            {
+              "id": "r4",
+              "text": "Knowledge of Windows internals, including processes, threads, services, registry, and Win32 API.",
+              "kind": "technical",
+              "priority": "must"
+            },
+            {
+              "id": "r5",
+              "text": "Skills in design, prototyping, development, unit testing, and performance profiling.",
+              "kind": "technical",
+              "priority": "must"
+            },
+            {
+              "id": "r6",
+              "text": "Experience with tools such as Visual Studio, Git, and Jira, and Agile/Scrum development.",
+              "kind": "technical",
+              "priority": "must"
+            }
+          ]
+        },
+        "questions": [
+          {
+            "id": "q1",
+            "requirement_ids": [
+              "r1"
+            ],
+            "category": "technical",
+            "prompt": "Can you describe a challenging project where you designed and developed security software for Windows? What specific techniques did you use to handle Windows internals and the associated complexities?",
+            "answer_outline": "The candidate should outline a specific project, detailing their design process, the tools and methodologies used (e.g., Win32 API, managing processes and threads), and how they addressed challenges related to Windows security software. They should focus on problem-solving and technical execution.",
+            "difficulty": 2
+          },
+          {
+            "id": "q2",
+            "requirement_ids": [
+              "r1"
+            ],
+            "category": "behavioural",
+            "prompt": "Tell me about a time when you collaborated with a team to solve a defect in an existing system. How did you ensure effective communication and implementation of the solution?",
+            "answer_outline": "The candidate should share a specific instance using STAR format, highlighting their role in identifying the defect, the steps taken to communicate within the team, the collaborative process to implement the solution, and the impact of the resolution on system performance or reliability.",
+            "difficulty": 2
+          },
+          {
+            "id": "q3",
+            "requirement_ids": [
+              "r2"
+            ],
+            "category": "behavioural",
+            "prompt": "Can you describe a specific project where you developed software in a Windows environment using C++? What challenges did you face, and how did you overcome them?",
+            "answer_outline": "Share an example of a Windows-based software project, detailing the challenges like performance issues or integration complexities. Discuss the implemented solutions and learning outcomes related to C++ development.",
+            "difficulty": 2
+          },
+          {
+            "id": "q4",
+            "requirement_ids": [
+              "r2"
+            ],
+            "category": "system-design",
+            "prompt": "How would you design a scalable security feature for the Qualys Sensor Platform that processes Windows internals? What trade-offs would you consider?",
+            "answer_outline": "Outline a high-level architecture for the security feature, discussing scalability considerations like load balancing and performance. Address trade-offs such as complexity vs. maintainability and security vs. performance.",
+            "difficulty": 3
+          },
+          {
+            "id": "q5",
+            "requirement_ids": [
+              "r3"
+            ],
+            "category": "technical",
+            "prompt": "Describe a challenging C++ project you worked on in a Windows environment. What specific Windows API features did you utilize, and what were the trade-offs in your design decisions?",
+            "answer_outline": "The candidate should provide a concrete example of a project, detailing the Windows API features (like threading or services) they used. They should discuss specific challenges such as performance issues or security concerns, and explain the reasoning behind their design choices and any trade-offs they faced.",
+            "difficulty": 2
+          },
+          {
+            "id": "q6",
+            "requirement_ids": [
+              "r3"
+            ],
+            "category": "technical",
+            "prompt": "Can you share an experience where you had to debug a complex issue in a C++ application on Windows? How did you approach the debugging process, and what tools did you employ?",
+            "answer_outline": "The candidate should recount a specific debugging scenario, including steps taken (e.g., using Visual Studio's debugging tools, or performance profiling) and methodologies (like isolating the bug, reviewing logs). They should also touch on the resolution and any lessons learned that improved their future debugging practices.",
+            "difficulty": 2
+          },
+          {
+            "id": "q7",
+            "requirement_ids": [
+              "r4"
+            ],
+            "category": "technical",
+            "prompt": "Can you describe a situation where you had to debug a performance issue in a Windows application? What tools did you use, and what was the outcome?",
+            "answer_outline": "The candidate should describe the specific issue they faced, detailing the tools such as Visual Studio for profiling, and possibly describe how they used Win32 API functionalities. They should conclude with how they resolved the issue and what improvements were made.",
+            "difficulty": 2
+          },
+          {
+            "id": "q8",
+            "requirement_ids": [
+              "r4"
+            ],
+            "category": "system-design",
+            "prompt": "When working on a project involving Windows internals, what trade-offs did you consider when choosing between implementing your own threading model versus using the Windows thread API? How did you decide?",
+            "answer_outline": "The candidate should explain the context of the project, the reasons for considering both options, and perhaps detail performance, complexity, and maintainability factors. The conclusion should highlight the decision made and its implications on the project.",
+            "difficulty": 3
+          },
+          {
+            "id": "q9",
+            "requirement_ids": [
+              "r5"
+            ],
+            "category": "technical",
+            "prompt": "Can you describe a project where you utilized C++ to develop or prototype a feature for a Windows-based application? What challenges did you face in terms of performance profiling, and how did you address them?",
+            "answer_outline": "The candidate should outline a specific project, detail their role in the design and implementation process, mention specific performance issues encountered (such as memory usage or speed), and describe the profiling tools used to diagnose and improve performance.",
+            "difficulty": 2
+          },
+          {
+            "id": "q10",
+            "requirement_ids": [
+              "r5"
+            ],
+            "category": "behavioural",
+            "prompt": "Tell me about a time when you had to recommend continuous improvements to a software product you were working on. What data or observations did you use to inform your recommendations, and what was the outcome?",
+            "answer_outline": "The candidate should use the STAR method to discuss a specific instance, providing context on what was analyzed (such as user feedback or performance metrics), the recommendations made (like code refactoring or new features), and the impact those changes had on the product's success.",
+            "difficulty": 2
+          },
+          {
+            "id": "q11",
+            "requirement_ids": [
+              "r6"
+            ],
+            "category": "behavioural",
+            "prompt": "Can you describe a situation where you had to use Visual Studio, Git, and JIRA in conjunction to collaborate on a software development project? What challenges did you face and how did you overcome them?",
+            "answer_outline": "Discuss a specific project that required using these tools, detailing the workflows in Visual Studio for coding, Git for version control, and JIRA for project tracking. Highlight any challenges in integration, version conflicts, or communication lapses with team members and how you resolved these issues, emphasizing collaboration and technical skills.",
+            "difficulty": 2
+          },
+          {
+            "id": "q12",
+            "requirement_ids": [
+              "r6"
+            ],
+            "category": "system-design",
+            "prompt": "In a Scrum team environment, how would you prioritize tasks that involve fixing bugs versus developing new features when using tools like Git and JIRA? What factors would influence your decision?",
+            "answer_outline": "Explain the criteria that would guide your decision-making process, such as the impact on users, project deadlines, and overall team capacity. Discuss how you would communicate and negotiate priorities with the team, ensuring that both short-term and long-term goals are met while using JIRA for task management and Git for tracking changes.",
+            "difficulty": 2
+          },
+          {
+            "id": "q13",
+            "requirement_ids": [],
+            "category": "company-fit",
+            "prompt": "What motivates you to work on security software, and how do you see your strengths contributing to the enhancement of the Qualys Sensor Platform?",
+            "answer_outline": "Discuss passion for cybersecurity and software development. Highlight strengths in C++ programming and collaboration skills. Emphasize a commitment to continuous improvement and teamwork.",
+            "difficulty": 2
+          },
+          {
+            "id": "q14",
+            "requirement_ids": [],
+            "category": "company-fit",
+            "prompt": "Can you explain your understanding of Windows internals and how it relates to developing secure software for the Qualys Sensor Platform?",
+            "answer_outline": "Describe knowledge of Windows processes, threads, and Win32 API. Connect this understanding to practical examples of secure software development and debugging experiences. Mention applicable best practices.",
+            "difficulty": 3
+          }
+        ],
+        "flashcards": [
+          {
+            "id": "f1",
+            "front": "What educational background is required for the position?",
+            "back": "Bachelor's degree in Computer Science or a related field.",
+            "requirement_ids": [
+              "r1"
+            ]
+          },
+          {
+            "id": "f2",
+            "front": "What is the minimum relevant work experience required?",
+            "back": "1 to 3 years of hands-on experience developing software products.",
+            "requirement_ids": [
+              "r2"
+            ]
+          },
+          {
+            "id": "f3",
+            "front": "How many years of C++ programming experience in a Windows environment are required?",
+            "back": "At least 1 year.",
+            "requirement_ids": [
+              "r3"
+            ]
+          },
+          {
+            "id": "f4",
+            "front": "What knowledge is essential regarding Windows internals?",
+            "back": "Knowledge of processes, threads, services, registry, and Win32 API.",
+            "requirement_ids": [
+              "r4"
+            ]
+          },
+          {
+            "id": "f5",
+            "front": "What technical skills are needed in terms of software development practices?",
+            "back": "Skills in design, prototyping, development, unit testing, and performance profiling.",
+            "requirement_ids": [
+              "r5"
+            ]
+          },
+          {
+            "id": "f6",
+            "front": "Which tools and methodologies should candidates be familiar with?",
+            "back": "Experience with Visual Studio, Git, Jira, and Agile/Scrum development.",
+            "requirement_ids": [
+              "r6"
+            ]
+          }
+        ],
+        "schedule": {
+          "days_available": 5,
+          "days": [
+            {
+              "day": 1,
+              "focus": "Company fit: role motivation, products, customers · Behavioural (STAR): Skills in design, prototyping, development · Technical: Bachelor's degree in Computer · System design: 1 to 3 years",
+              "question_ids": [
+                "q14",
+                "q10",
+                "q1",
+                "q4"
+              ],
+              "minutes": 80
+            },
+            {
+              "day": 2,
+              "focus": "Technical: Windows internals, processes, threads · System design: Windows internals, processes, threads",
+              "question_ids": [
+                "q8",
+                "q7"
+              ],
+              "minutes": 40
+            },
+            {
+              "day": 3,
+              "focus": "Behavioural (STAR): tools such as Visual, Git, Jira, 1 to 3 years · Technical: Skills in design, prototyping, development",
+              "question_ids": [
+                "q11",
+                "q3",
+                "q9"
+              ],
+              "minutes": 45
+            },
+            {
+              "day": 4,
+              "focus": "Company fit: role motivation, products, customers · Technical: At least 1 year · System design: tools such as Visual, Git, Jira",
+              "question_ids": [
+                "q12",
+                "q5",
+                "q13"
+              ],
+              "minutes": 45
+            },
+            {
+              "day": 5,
+              "focus": "Behavioural (STAR): Bachelor's degree in Computer · Technical: At least 1 year",
+              "question_ids": [
+                "q2",
+                "q6"
+              ],
+              "minutes": 30
+            }
+          ]
+        },
+        "coverage": {
+          "uncovered_requirement_ids": [],
+          "passes": 1
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "case-4",
+      "status": "ok",
+      "kit": {
+        "source": {
+          "company": "Apple",
+          "company_url": "https://www.apple.com/careers/us/",
+          "role": "Backend and Middleware Engineer",
+          "location": "",
+          "jd_chars": 1783,
+          "researched_at": "2026-09-25T06:24:54.859Z",
+          "pages_used": [
+            "https://www.apple.com/careers/us/",
+            "https://www.apple.com/careers/us/life-at-apple.html",
+            "https://www.apple.com/careers/us/work-at-apple.html",
+            "https://www.apple.com/careers/us/work-at-apple/teams/hardware.html",
+            "https://www.apple.com/careers/us/work-at-apple/retail.html",
+            "https://www.apple.com/careers/us/accessibility.html",
+            "https://www.apple.com/accessibility/",
+            "https://www.apple.com/education-initiative/",
+            "https://www.apple.com/environment/",
+            "https://www.apple.com/diversity/",
+            "https://www.apple.com/privacy/",
+            "https://www.apple.com/racial-equity-justice-initiative/",
+            "https://www.apple.com/supply-chain/",
+            "https://www.apple.com/careers/us/work-at-apple/teams/machine-learning-and-ai.html",
+            "https://www.apple.com/careers/us/work-at-apple/teams/support-and-service.html"
+          ]
+        },
+        "company_brief": {
+          "summary": "Apple is committed to creating an inclusive and innovative work environment where individuals can thrive and contribute their unique perspectives. They focus on values such as accessibility, education empowerment, environmental responsibility, and inclusion and diversity. Apple promotes collaboration across functional specialties to foster innovation and places importance on professional and personal growth for their employees. They also have various initiatives aimed at enhancing accessibility in their workplace and products, ensuring that everyone has the resources and support they need to succeed.",
+          "what_they_do": "Apple designs and creates a wide range of technology products, including hardware, software, and services, with a focus on providing exceptional user experiences. They are known for their innovations in areas such as hardware engineering, software development, and accessibility features integrated into their products.",
+          "sources": [
+            "https://www.apple.com/careers/us/",
+            "https://www.apple.com/careers/us/life-at-apple.html",
+            "https://www.apple.com/careers/us/work-at-apple.html",
+            "https://www.apple.com/careers/us/work-at-apple/teams/hardware.html",
+            "https://www.apple.com/careers/us/work-at-apple/retail.html",
+            "https://www.apple.com/careers/us/accessibility.html",
+            "https://www.apple.com/accessibility/",
+            "https://www.apple.com/education-initiative/",
+            "https://www.apple.com/environment/",
+            "https://www.apple.com/diversity/",
+            "https://www.apple.com/privacy/",
+            "https://www.apple.com/racial-equity-justice-initiative/",
+            "https://www.apple.com/supply-chain/",
+            "https://www.apple.com/careers/us/work-at-apple/teams/machine-learning-and-ai.html",
+            "https://www.apple.com/careers/us/work-at-apple/teams/support-and-service.html",
+            "https://www.interviewcrunch.com/guides/apple-interview-process\nApple",
+            "https://www.reddit.com/r/AskProgrammers/comments/1vcdj8h/apple_swe_interview_process_online_assessment\nApple",
+            "https://www.getorava.com/interview-guides/software-engineer-apple\nApple"
+          ]
+        },
+        "role": {
+          "title": "Backend and Middleware Engineer",
+          "seniority": "Mid/Senior",
+          "responsibilities": [
+            "Design and develop frameworks that process high-volume transactions with Apple's partners.",
+            "Use sound judgment and technical leadership to enhance and scale B2B platforms.",
+            "Develop solutions that optimize availability and consistency across data centers and cloud providers.",
+            "Build frameworks for persistence, event processing, uniqueness, transaction correlation, and notifications.",
+            "Work with project developers, operations, and systems engineers."
+          ],
+          "requirements": [
+            {
+              "id": "r1",
+              "text": "More than 2 years of experience building frameworks using middleware such as Apache Camel.",
+              "kind": "technical",
+              "priority": "must"
+            },
+            {
+              "id": "r2",
+              "text": "More than 8 years of Java programming for middleware or backend applications.",
+              "kind": "technical",
+              "priority": "must"
+            },
+            {
+              "id": "r3",
+              "text": "More than 5 years using Java frameworks such as Spring.",
+              "kind": "technical",
+              "priority": "nice"
+            },
+            {
+              "id": "r4",
+              "text": "Strong object-oriented design and analysis skills.",
+              "kind": "technical",
+              "priority": "nice"
+            },
+            {
+              "id": "r5",
+              "text": "More than 5 years working with Oracle or similar relational databases and NoSQL databases such as MongoDB.",
+              "kind": "technical",
+              "priority": "nice"
+            },
+            {
+              "id": "r6",
+              "text": "More than 5 years designing scalable, reliable solutions using distributed system architecture.",
+              "kind": "technical",
+              "priority": "nice"
+            },
+            {
+              "id": "r7",
+              "text": "Knowledge of HTTP/S, TCP, DNS, and web application load balancing.",
+              "kind": "technical",
+              "priority": "nice"
+            },
+            {
+              "id": "r8",
+              "text": "Knowledge of JVMs, operating systems, file systems, network protocols, and security concepts including authentication, authorization, signing, encryption, SSL/TLS, SSH/SFTP, PKI, X509 certificates, and PGP.",
+              "kind": "technical",
+              "priority": "nice"
+            },
+            {
+              "id": "r9",
+              "text": "Experience tuning application and database performance.",
+              "kind": "technical",
+              "priority": "nice"
+            },
+            {
+              "id": "r10",
+              "text": "Knowledge of Bash or Perl.",
+              "kind": "technical",
+              "priority": "nice"
+            },
+            {
+              "id": "r11",
+              "text": "Cloud integration experience is a plus.",
+              "kind": "technical",
+              "priority": "nice"
+            },
+            {
+              "id": "r12",
+              "text": "Familiarity with AI/ML fundamentals is a plus.",
+              "kind": "technical",
+              "priority": "nice"
+            },
+            {
+              "id": "r13",
+              "text": "Agile development experience.",
+              "kind": "behavioural",
+              "priority": "nice"
+            },
+            {
+              "id": "r14",
+              "text": "Ownership, problem solving, collaboration, communication, and ability to handle ambiguity.",
+              "kind": "behavioural",
+              "priority": "nice"
+            },
+            {
+              "id": "r15",
+              "text": "Ability to lead large projects and achieve strong results.",
+              "kind": "behavioural",
+              "priority": "nice"
+            }
+          ]
+        },
+        "questions": [
+          {
+            "id": "q1",
+            "requirement_ids": [
+              "r1"
+            ],
+            "category": "technical",
+            "prompt": "Can you describe a specific framework you built using Apache Camel? What were the primary challenges you faced during its development, and how did you address them?",
+            "answer_outline": "The candidate should discuss a real framework, detailing its use case, design decisions, and specific challenges like integration issues or performance optimization. They should also explain the strategies used to overcome these challenges.",
+            "difficulty": 2
+          },
+          {
+            "id": "q2",
+            "requirement_ids": [
+              "r1"
+            ],
+            "category": "system-design",
+            "prompt": "In a situation where you need to enhance a B2B platform's scalability while maintaining data consistency, how would you balance those trade-offs? Can you give an example of a past experience where you had to do this?",
+            "answer_outline": "The candidate should articulate the concepts of scalability versus consistency from a distributed systems perspective, potentially referencing ACID vs. BASE principles. They should provide a relevant past experience illustrating how they navigated this challenge.",
+            "difficulty": 3
+          },
+          {
+            "id": "q3",
+            "requirement_ids": [
+              "r2"
+            ],
+            "category": "technical",
+            "prompt": "Can you describe a project where you designed and implemented a high-volume transaction framework using Java? What challenges did you encounter, and how did you address them?",
+            "answer_outline": "The candidate should discuss specifics about the project, including the architecture, technologies used (like Spring or Java EE), the transaction volume, and the performance optimizations applied. Challenges might include handling concurrency, data consistency, or scaling issues, along with the strategies employed to overcome these hurdles.",
+            "difficulty": 2
+          },
+          {
+            "id": "q4",
+            "requirement_ids": [
+              "r2"
+            ],
+            "category": "system-design",
+            "prompt": "In a situation where you needed to enhance an existing B2B platform for better scalability, how did you determine the trade-offs between maintaining existing functionality and introducing new features?",
+            "answer_outline": "The candidate should outline a systematic approach, discussing factors such as performance metrics, user impact, and resource constraints. They should explain how they involved stakeholders in decision-making, prioritized features, and conducted testing to ensure that enhancements did not disrupt current services.",
+            "difficulty": 3
+          },
+          {
+            "id": "q5",
+            "requirement_ids": [
+              "r3"
+            ],
+            "category": "technical",
+            "prompt": "Can you describe a specific project where you used the Spring framework to develop a middleware solution? What challenges did you encounter and how did you address them?",
+            "answer_outline": "The candidate should detail a project involving Spring, highlighting specific features used. They should describe challenges like performance issues or integration problems, and outline the strategies used to solve them, showcasing their problem-solving skills and expertise with the framework.",
+            "difficulty": 2
+          },
+          {
+            "id": "q6",
+            "requirement_ids": [
+              "r3"
+            ],
+            "category": "system-design",
+            "prompt": "Explain a situation where you had to scale a distributed system using Java and Spring. What design decisions did you make to ensure reliability and consistency across data centers?",
+            "answer_outline": "The candidate should provide an example of scaling a system, focusing on decisions like load balancing, data replication, or service-oriented architecture. They should discuss how they maintained availability and consistency, demonstrating their understanding of system design principles.",
+            "difficulty": 3
+          },
+          {
+            "id": "q7",
+            "requirement_ids": [
+              "r4"
+            ],
+            "category": "behavioural",
+            "prompt": "Can you describe a time when you implemented a new object-oriented design pattern in a project? What challenges did you face, and how did you overcome them?",
+            "answer_outline": "The candidate should explain a specific project, the design pattern they used (e.g., Singleton, Factory), the reasoning behind the choice, challenges in implementation (e.g., integration issues, performance), and the positive outcomes achieved.",
+            "difficulty": 2
+          },
+          {
+            "id": "q8",
+            "requirement_ids": [
+              "r4"
+            ],
+            "category": "technical",
+            "prompt": "When designing a framework for processing high-volume transactions, what object-oriented design principles do you prioritize, and why? How do you balance these with performance requirements?",
+            "answer_outline": "The candidate should discuss key principles (e.g., encapsulation, modularity, reusability), their importance in ensuring code maintainability while meeting performance demands, and potential trade-offs, such as simpler designs vs. complex but efficient architectures.",
+            "difficulty": 3
+          },
+          {
+            "id": "q9",
+            "requirement_ids": [
+              "r5"
+            ],
+            "category": "technical",
+            "prompt": "Can you describe a time when you had to optimize the performance of a database in a high-volume transaction environment? What specific steps did you take, and what were the trade-offs involved?",
+            "answer_outline": "The candidate should discuss a specific project where they identified performance bottlenecks, implemented indexing strategies or query optimizations, and potentially balanced performance with maintainability or cost. Emphasis on their decision-making process and the outcomes.",
+            "difficulty": 2
+          },
+          {
+            "id": "q10",
+            "requirement_ids": [
+              "r5"
+            ],
+            "category": "system-design",
+            "prompt": "When designing a distributed system that uses both Oracle and NoSQL databases like MongoDB, how do you decide which data to store in which type of database, and what factors do you consider to ensure consistency and reliability?",
+            "answer_outline": "The candidate should outline their criteria for selecting database types based on factors like data structure, access patterns, scalability needs, and transaction requirements. They should also discuss strategies for maintaining consistency, such as eventual consistency models or hybrid approaches.",
+            "difficulty": 3
+          },
+          {
+            "id": "q11",
+            "requirement_ids": [
+              "r6"
+            ],
+            "category": "system-design",
+            "prompt": "Can you describe a project where you had to design a scalable distributed system? What were the main challenges you faced, and how did you ensure reliability across components?",
+            "answer_outline": "Look for a structured response using the STAR method: Describe the Situation and Task (context of the project), the Action taken to design the system (specific technologies and methodologies used), and the Result (outcomes, performance metrics). Highlight any tradeoffs made in terms of speed vs reliability or cost vs performance.",
+            "difficulty": 2
+          },
+          {
+            "id": "q12",
+            "requirement_ids": [
+              "r6"
+            ],
+            "category": "system-design",
+            "prompt": "In a scenario where a distributed system you designed experiences a sudden spike in traffic, what strategies would you implement to maintain system availability and consistency? Please explain the reasoning behind your choices.",
+            "answer_outline": "Focus on specific strategies that include load balancing, auto-scaling, caching, database sharding, or failover mechanisms. Discuss the importance of maintaining data consistency and any impact on user experience. Highlight how to balance increased load with system stability.",
+            "difficulty": 3
+          },
+          {
+            "id": "q13",
+            "requirement_ids": [
+              "r7"
+            ],
+            "category": "system-design",
+            "prompt": "Can you describe a situation where you had to optimize a web application for scalability and availability? What specific protocols and load balancing strategies did you implement and why?",
+            "answer_outline": "The candidate should detail a project, explaining the web application's initial performance challenges. Discuss the protocols (HTTP/S, TCP) used, how load balancing was configured (like round-robin, sticky sessions), and the impacts of these changes on scalability and availability.",
+            "difficulty": 2
+          },
+          {
+            "id": "q14",
+            "requirement_ids": [
+              "r7"
+            ],
+            "category": "system-design",
+            "prompt": "Have you ever faced a tradeoff between consistency and availability in a distributed system? How did you approach the decision-making process and what was the outcome?",
+            "answer_outline": "The candidate should provide a specific example, explaining the system's requirements, the decision-making criteria (like CAP theorem), the end solution chosen, and the results of that decision (e.g., user experience, system performance).",
+            "difficulty": 3
+          },
+          {
+            "id": "q15",
+            "requirement_ids": [
+              "r8"
+            ],
+            "category": "behavioural",
+            "prompt": "Can you describe a situation where you had to implement security measures in a backend system, specifically related to encryption and authentication? What challenges did you face, and how did you ensure the system remained both secure and performant?",
+            "answer_outline": "The candidate should describe a past project where they implemented security features, detailing the specific security concepts used (e.g., SSL/TLS for encryption, OAuth for authentication). Challenges could include balancing performance with security measures, managing key storage, or handling legacy systems. The outcome should reflect successful implementation while maintaining system efficiency.",
+            "difficulty": 2
+          },
+          {
+            "id": "q16",
+            "requirement_ids": [
+              "r8"
+            ],
+            "category": "system-design",
+            "prompt": "Design a backend system that handles high-volume transactions while ensuring data consistency across multiple data centers. What tradeoffs would you consider between consistency and availability, and how would you implement security for the data in transit?",
+            "answer_outline": "The candidate should propose a system architecture, such as using distributed databases with a consensus algorithm (like Paxos or Raft) to ensure consistency. They should address the CAP theorem tradeoffs and justify their decisions. For security, they might mention using encryption protocols (SSL/TLS) for data in transit and additional layers of security (authentication, authorization).",
+            "difficulty": 3
+          },
+          {
+            "id": "q17",
+            "requirement_ids": [
+              "r9"
+            ],
+            "category": "behavioural",
+            "prompt": "Describe a situation where you had to tune the performance of a database in a production environment. What steps did you take, and what was the outcome?",
+            "answer_outline": "The candidate should explain the context of the performance issue, the specific database and the metrics that were being affected. They should detail the tuning actions taken — such as query optimization, indexing strategies, or configuration adjustments — and provide insights on how they measured improvements and ensured minimal impact on users.",
+            "difficulty": 2
+          },
+          {
+            "id": "q18",
+            "requirement_ids": [
+              "r9"
+            ],
+            "category": "system-design",
+            "prompt": "How would you approach designing a middleware framework that ensures optimal performance and resource utilization for high-volume transactions? What trade-offs would you consider?",
+            "answer_outline": "The candidate should identify key factors such as data consistency, scalability, and fault tolerance. They should discuss the architecture they would adopt, potential middleware technologies, and trade-offs, such as balancing between availability and consistency (CAP theorem) as well as the intended use of caching solutions versus real-time processing.",
+            "difficulty": 3
+          },
+          {
+            "id": "q19",
+            "requirement_ids": [
+              "r10"
+            ],
+            "category": "technical",
+            "prompt": "Can you describe a project where you implemented a middleware framework using Bash or Perl? What were some of the challenges you faced and how did you overcome them?",
+            "answer_outline": "Discuss a specific project involving Bash or Perl for middleware where you built a framework. Highlight key challenges such as performance issues or integration difficulties, and the skills or techniques you applied to resolve them, emphasizing problem-solving and technical expertise.",
+            "difficulty": 2
+          },
+          {
+            "id": "q20",
+            "requirement_ids": [
+              "r10"
+            ],
+            "category": "system-design",
+            "prompt": "When designing a scalable solution that incorporates both relational and NoSQL databases, what factors do you consider in terms of data consistency and availability? Could you give an example of a tradeoff you encountered in a past project?",
+            "answer_outline": "Discuss the importance of CAP theorem and how it influences your design decisions for consistency vs. availability. Provide an example where you had to choose between immediate consistency and performance, detailing the impact of that decision on the project outcomes.",
+            "difficulty": 3
+          },
+          {
+            "id": "q21",
+            "requirement_ids": [
+              "r11"
+            ],
+            "category": "technical",
+            "prompt": "Can you describe a specific project where you integrated a cloud solution into an existing middleware framework? What challenges did you face and how did you address them?",
+            "answer_outline": "The candidate should detail a specific project, mentioning the cloud technologies used, the goals of the integration, challenges like data consistency or latency issues, and solutions such as using asynchronous processing or optimizing API calls.",
+            "difficulty": 2
+          },
+          {
+            "id": "q22",
+            "requirement_ids": [
+              "r11"
+            ],
+            "category": "system-design",
+            "prompt": "In your experience, what trade-offs have you encountered when enhancing B2B platforms for cloud scalability? How did you decide on the architectural approach you took?",
+            "answer_outline": "The candidate should discuss trade-offs related to costs, complexity, performance, and reliability. They should explain how they evaluated options like microservices versus monolithic architectures and the decision-making process that led to their chosen approach.",
+            "difficulty": 3
+          },
+          {
+            "id": "q23",
+            "requirement_ids": [
+              "r12"
+            ],
+            "category": "technical",
+            "prompt": "Can you provide an example of a project where you utilized middleware frameworks, such as Apache Camel, to manage high-volume transactions? What trade-offs did you consider in terms of scalability and reliability?",
+            "answer_outline": "The candidate should describe a specific project, outlining their role and responsibilities. They should explain how they implemented middleware to handle transactions, discussing key trade-offs like performance versus complexity, availability during peak loads, and managing failover mechanisms.",
+            "difficulty": 2
+          },
+          {
+            "id": "q24",
+            "requirement_ids": [
+              "r12"
+            ],
+            "category": "system-design",
+            "prompt": "Describe a time when you had to optimize the performance of a distributed system that relied on multiple data centers. What approaches did you take and what were the results?",
+            "answer_outline": "The candidate should illustrate a relevant experience, detailing actions taken to improve system performance such as load balancing, caching strategies, or database optimizations. They should also address measurable outcomes, such as reduced latency or increased transaction throughput.",
+            "difficulty": 3
+          },
+          {
+            "id": "q25",
+            "requirement_ids": [
+              "r13"
+            ],
+            "category": "behavioural",
+            "prompt": "Can you describe a scenario where you had to adapt your agile development methodology to better fit the needs of your project team? What specific changes did you implement, and what was the outcome?",
+            "answer_outline": "The candidate should detail a specific project context where they recognized that traditional agile practices needed modification. They might discuss introducing daily stand-ups, redefining sprints, or enhancing collaboration tools. Successful outcomes could include improved team efficiency, better deliverables, or enhanced communication.",
+            "difficulty": 2
+          },
+          {
+            "id": "q26",
+            "requirement_ids": [
+              "r13"
+            ],
+            "category": "behavioural",
+            "prompt": "How do you prioritize features and improvements to a middleware framework while working in an agile environment? Can you provide an example of a tradeoff you had to make?",
+            "answer_outline": "The candidate should explain their prioritization process, perhaps using frameworks like MoSCoW or the backlog refinement process. They should share a specific example where they had to balance technical debt with feature delivery, discussing the implications of their tradeoff on team morale or the product’s success.",
+            "difficulty": 3
+          },
+          {
+            "id": "q27",
+            "requirement_ids": [
+              "r14"
+            ],
+            "category": "behavioural",
+            "prompt": "Can you describe a situation where you had to take ownership of a challenging project while collaborating with others? How did you navigate the project's ambiguities and ensure successful outcomes?",
+            "answer_outline": "The candidate should describe a specific project, identify the challenges and ambiguities faced, explain their approach to collaboration and problem-solving, and highlight the outcomes achieved and any lessons learned.",
+            "difficulty": 2
+          },
+          {
+            "id": "q28",
+            "requirement_ids": [
+              "r14"
+            ],
+            "category": "behavioural",
+            "prompt": "Tell me about a time when you had to communicate complex technical information to a non-technical audience. How did you ensure clarity and understanding while addressing potential concerns?",
+            "answer_outline": "The candidate should provide a concrete example of the communication scenario, describe their strategy for simplifying the technical concepts, explain how they gauged understanding, and detail the impact of their communication on the project or team dynamics.",
+            "difficulty": 2
+          },
+          {
+            "id": "q29",
+            "requirement_ids": [
+              "r15"
+            ],
+            "category": "behavioural",
+            "prompt": "Can you describe a time when you led a large-scale project that involved transforming a B2B platform? What were the key challenges, and how did you ensure collaboration among cross-functional teams?",
+            "answer_outline": "The candidate should detail a specific project where they were responsible for leading a team, discussing challenges related to technical decisions and teamwork. They should highlight tools used for project management, methods for resolving conflicts, and how they ensured the project met its objectives.",
+            "difficulty": 2
+          },
+          {
+            "id": "q30",
+            "requirement_ids": [
+              "r15"
+            ],
+            "category": "system-design",
+            "prompt": "How would you approach the scaling of a middleware framework to handle increasing transaction volumes? What steps would you take to maintain both availability and consistency across multiple data centers?",
+            "answer_outline": "The candidate should discuss their approach to distributed system architecture, including strategies for load balancing, data replication, and fallback mechanisms. They should also mention any tools or technologies they would utilize and describe trade-offs involved in their decisions.",
+            "difficulty": 3
+          },
+          {
+            "id": "q31",
+            "requirement_ids": [],
+            "category": "company-fit",
+            "prompt": "How does your experience with middleware, such as Apache Camel, align with Apple's vision of designing frameworks that process high-volume transactions with partners?",
+            "answer_outline": "Discuss experience with middleware solutions, specific projects where high-volume transactions were processed, and insights on enhancing frameworks that can support scalability, reliability, and cross-provider consistency.",
+            "difficulty": 2
+          },
+          {
+            "id": "q32",
+            "requirement_ids": [],
+            "category": "company-fit",
+            "prompt": "Can you describe a project where you optimized application or database performance, and how that experience can contribute to Apple's focus on collaboration and innovation in a highly technical environment?",
+            "answer_outline": "Detail a specific project focusing on problem-solving and performance tuning, emphasize collaboration with teams, and explain how the resulting solutions could inspire innovation and fit into Apple's inclusive and high-quality standards.",
+            "difficulty": 2
+          }
+        ],
+        "flashcards": [
+          {
+            "id": "f1",
+            "front": "How many years of experience do you have building frameworks using middleware like Apache Camel?",
+            "back": "Must have more than 2 years of experience.",
+            "requirement_ids": [
+              "r1"
+            ]
+          },
+          {
+            "id": "f2",
+            "front": "What is your experience level in Java programming for middleware or backend applications?",
+            "back": "Must have more than 8 years of experience.",
+            "requirement_ids": [
+              "r2"
+            ]
+          },
+          {
+            "id": "f3",
+            "front": "How many years have you worked with Java frameworks, particularly Spring?",
+            "back": "More than 5 years is a nice to have.",
+            "requirement_ids": [
+              "r3"
+            ]
+          },
+          {
+            "id": "f4",
+            "front": "Can you describe your object-oriented design and analysis skills?",
+            "back": "Strong skills in this area are a nice to have.",
+            "requirement_ids": [
+              "r4"
+            ]
+          },
+          {
+            "id": "f5",
+            "front": "What is your experience with Oracle or similar relational databases and NoSQL databases like MongoDB?",
+            "back": "More than 5 years is a nice to have.",
+            "requirement_ids": [
+              "r5"
+            ]
+          },
+          {
+            "id": "f6",
+            "front": "Do you have experience designing scalable, reliable solutions using distributed system architecture?",
+            "back": "More than 5 years of experience is a nice to have.",
+            "requirement_ids": [
+              "r6"
+            ]
+          },
+          {
+            "id": "f7",
+            "front": "What knowledge do you have regarding HTTP/S, TCP, DNS, and web application load balancing?",
+            "back": "Knowledge in this area is a nice to have.",
+            "requirement_ids": [
+              "r7"
+            ]
+          },
+          {
+            "id": "f8",
+            "front": "Can you discuss your knowledge of JVMs, operating systems, file systems, and security concepts?",
+            "back": "This knowledge is nice to have, including SSL/TLS and PGP.",
+            "requirement_ids": [
+              "r8"
+            ]
+          },
+          {
+            "id": "f9",
+            "front": "What is your experience with tuning application and database performance?",
+            "back": "Experience in this area is a nice to have.",
+            "requirement_ids": [
+              "r9"
+            ]
+          },
+          {
+            "id": "f10",
+            "front": "Are you familiar with Bash or Perl scripting languages?",
+            "back": "Knowledge here is a nice to have.",
+            "requirement_ids": [
+              "r10"
+            ]
+          },
+          {
+            "id": "f11",
+            "front": "Do you have any cloud integration experience?",
+            "back": "This is considered a nice to have.",
+            "requirement_ids": [
+              "r11"
+            ]
+          },
+          {
+            "id": "f12",
+            "front": "What familiarity do you have with AI/ML fundamentals?",
+            "back": "This is considered a nice to have.",
+            "requirement_ids": [
+              "r12"
+            ]
+          },
+          {
+            "id": "f13",
+            "front": "Can you describe your experience in agile development?",
+            "back": "This is considered a nice to have.",
+            "requirement_ids": [
+              "r13"
+            ]
+          },
+          {
+            "id": "f14",
+            "front": "How do you approach ownership, problem solving, and communication in your work?",
+            "back": "These are important behavioral traits, considered nice to have.",
+            "requirement_ids": [
+              "r14"
+            ]
+          },
+          {
+            "id": "f15",
+            "front": "Have you ever led large projects to strong results?",
+            "back": "Ability to lead and achieve results is a nice to have.",
+            "requirement_ids": [
+              "r15"
+            ]
+          }
+        ],
+        "schedule": {
+          "days_available": 5,
+          "days": [
+            {
+              "day": 1,
+              "focus": "Company fit: role motivation, products, customers · Behavioural (STAR): Agile development experience · Technical: More than 2 years, AI/ML fundamentals is a · System design: More than 2 years, HTTP/S, TCP",
+              "question_ids": [
+                "q31",
+                "q26",
+                "q1",
+                "q2",
+                "q13",
+                "q23",
+                "q32"
+              ],
+              "minutes": 125
+            },
+            {
+              "day": 2,
+              "focus": "Behavioural (STAR): Ownership, problem solving, collaboration · Technical: Bash or Perl, More than 5 years, NoSQL databases such as · System design: More than 8 years, JVMs, operating systems, AI/ML fundamentals is a, More than 5 years",
+              "question_ids": [
+                "q4",
+                "q16",
+                "q24",
+                "q11",
+                "q19",
+                "q28",
+                "q9"
+              ],
+              "minutes": 135
+            },
+            {
+              "day": 3,
+              "focus": "Behavioural (STAR): Ability to lead large, achieve strong results · Technical: More than 8 years, Strong object-oriented design, analysis skills, Cloud integration experience is · System design: HTTP/S, TCP, DNS, Cloud integration experience is",
+              "question_ids": [
+                "q3",
+                "q14",
+                "q22",
+                "q8",
+                "q21",
+                "q29"
+              ],
+              "minutes": 120
+            },
+            {
+              "day": 4,
+              "focus": "Behavioural (STAR): JVMs, operating systems, file systems, Agile development experience · Technical: More than 5 years · System design: More than 5 years, NoSQL databases such as, Experience tuning application, Ability to lead large",
+              "question_ids": [
+                "q10",
+                "q18",
+                "q30",
+                "q15",
+                "q25",
+                "q5"
+              ],
+              "minutes": 120
+            },
+            {
+              "day": 5,
+              "focus": "Behavioural (STAR): Experience tuning application, database performance, Ownership, Strong object-oriented design · System design: More than 5 years, reliable solutions using distributed, Bash or Perl",
+              "question_ids": [
+                "q12",
+                "q20",
+                "q6",
+                "q17",
+                "q27",
+                "q7"
+              ],
+              "minutes": 120
+            }
+          ]
+        },
+        "coverage": {
+          "uncovered_requirement_ids": [],
+          "passes": 1
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "case-5",
+      "status": "ok",
+      "kit": {
+        "source": {
+          "company": "Quikhire",
+          "company_url": "https://www.quikhire.co.in/",
+          "role": "Backend Software Engineer",
+          "location": "",
+          "jd_chars": 1304,
+          "researched_at": "2026-09-25T06:25:23.228Z",
+          "pages_used": [
+            "https://www.quikhire.co.in/",
+            "https://www.quikhire.co.in/about/",
+            "https://www.quikhire.co.in/ai-tools/",
+            "https://www.quikhire.co.in/contact-us/",
+            "https://www.quikhire.co.in/services/",
+            "https://www.quikhire.co.in/chatgpt-plugin/"
+          ]
+        },
+        "company_brief": {
+          "summary": "Quikhire connects talent with opportunity, focusing on comprehensive HR solutions. They support recruitment, workforce planning, employee training, compliance, and strategic organizational design. They provide a talent engine that leans on live market data and maintains a large contractor network, aiming for personalized support in HR functions. The company emphasizes quality retention in staffing with a replacement guarantee on placements and fosters long-term partnerships with businesses.",
+          "what_they_do": "Quikhire specializes in HR solutions, including talent acquisition, workforce planning, employee training, HR compliance, and strategic workforce strategy.",
+          "sources": [
+            "https://www.quikhire.co.in/",
+            "https://www.quikhire.co.in/about/",
+            "https://www.quikhire.co.in/ai-tools/",
+            "https://www.quikhire.co.in/contact-us/",
+            "https://www.quikhire.co.in/services/",
+            "https://www.quikhire.co.in/chatgpt-plugin/",
+            "https://kanpur.in.expertini.com/job/software-engineer-ruby-remote-kanpur-quik-hire-staffing-1963-60680245\nSoftware",
+            "https://india.in.expertini.com/job/software-engineer-ruby-remote-india-quik-hire-staffing-636991603801065557\nSoftware",
+            "https://bebee.com/gb/jobs/software-quality-engineer-remote-quik-hire-staffing--t7xk-795227012\nSoftware"
+          ]
+        },
+        "role": {
+          "title": "Backend Software Engineer",
+          "seniority": "Mid-level",
+          "responsibilities": [
+            "Design, develop, and maintain software applications using modern programming languages and frameworks.",
+            "Write clean, modular, reusable code following best practices.",
+            "Work with product managers, designers, and engineers to define requirements and deliver solutions.",
+            "Troubleshoot, debug, and resolve software defects and performance issues.",
+            "Participate in code reviews and architectural decisions."
+          ],
+          "requirements": [
+            {
+              "id": "r1",
+              "text": "Proficiency in Python, Java, or JavaScript.",
+              "kind": "technical",
+              "priority": "must"
+            },
+            {
+              "id": "r2",
+              "text": "Experience with Agile or Scrum methodologies.",
+              "kind": "technical",
+              "priority": "must"
+            },
+            {
+              "id": "r3",
+              "text": "Strong problem-solving skills and ability to write efficient algorithms.",
+              "kind": "behavioural",
+              "priority": "must"
+            },
+            {
+              "id": "r4",
+              "text": "Familiarity with version control systems such as Git.",
+              "kind": "technical",
+              "priority": "must"
+            },
+            {
+              "id": "r5",
+              "text": "Understanding of data structures and database systems.",
+              "kind": "technical",
+              "priority": "must"
+            }
+          ]
+        },
+        "questions": [
+          {
+            "id": "q1",
+            "requirement_ids": [
+              "r1"
+            ],
+            "category": "technical",
+            "prompt": "Can you describe a project where you used Python, Java, or JavaScript to solve a complex problem? What was your approach and what challenges did you encounter?",
+            "answer_outline": "The candidate should explain the project context, their specific role, the problem they were solving, the technical choices made, and how they overcame challenges, highlighting their coding proficiency and problem-solving skills.",
+            "difficulty": 2
+          },
+          {
+            "id": "q2",
+            "requirement_ids": [
+              "r1"
+            ],
+            "category": "behavioural",
+            "prompt": "In a scenario where you need to deliver a software feature but discover a performance issue in the existing codebase, how would you balance delivering on time versus fixing the issue? Can you provide an example from your past experience?",
+            "answer_outline": "The candidate should discuss decision-making criteria, such as evaluating impact vs. timelines, potential workarounds, stakeholder communication, and examples from past roles where they had to make similar trade-offs.",
+            "difficulty": 3
+          },
+          {
+            "id": "q3",
+            "requirement_ids": [
+              "r2"
+            ],
+            "category": "behavioural",
+            "prompt": "Can you describe a specific project where you applied Agile or Scrum methodologies? What were the key challenges you faced, and how did you address them?",
+            "answer_outline": "Candidate should describe a project, emphasizing how they implemented Agile or Scrum principles like sprints, daily stand-ups, and retrospectives. They should discuss challenges such as team collaboration or managing shifting requirements and explain the solutions they employed.",
+            "difficulty": 2
+          },
+          {
+            "id": "q4",
+            "requirement_ids": [
+              "r2"
+            ],
+            "category": "system-design",
+            "prompt": "When working on a software project using Agile methodologies, how do you balance the need for quick iterations with the requirement for code quality and performance optimization?",
+            "answer_outline": "Look for a response that highlights strategies like prioritizing tasks, setting code quality standards, conducting regular code reviews, and using automated testing. The candidate should explain how they managed short development cycles while maintaining code integrity.",
+            "difficulty": 2
+          },
+          {
+            "id": "q5",
+            "requirement_ids": [
+              "r3"
+            ],
+            "category": "behavioural",
+            "prompt": "Can you describe a specific situation where you encountered a complex problem while developing a software application? What algorithm did you implement to solve it?",
+            "answer_outline": "The candidate should provide a detailed account of the problem, the thought process behind selecting the algorithm, and the outcome. Look for clarity in problem definition, effectiveness of the algorithm, and how they measured the solution's success.",
+            "difficulty": 2
+          },
+          {
+            "id": "q6",
+            "requirement_ids": [
+              "r3"
+            ],
+            "category": "system-design",
+            "prompt": "When faced with performance issues in an application, how would you decide between optimizing existing code versus rewriting a component from scratch? Can you provide an example where you made such a decision?",
+            "answer_outline": "Candidates should highlight the criteria they used to make their decision, such as performance metrics, time constraints, and resource availability. They should reference a past experience that illustrates this trade-off clearly.",
+            "difficulty": 3
+          },
+          {
+            "id": "q7",
+            "requirement_ids": [
+              "r4"
+            ],
+            "category": "behavioural",
+            "prompt": "Describe a situation where you had to resolve a conflict or issue related to version control in a team setting. What steps did you take to address the problem and what was the outcome?",
+            "answer_outline": "The candidate should provide a specific example using the STAR method, detailing the specific conflict, the actions they took to resolve it (e.g., improving branching strategies, clarifying roles in Git), and the positive impact of their resolution on the team's workflow.",
+            "difficulty": 2
+          },
+          {
+            "id": "q8",
+            "requirement_ids": [
+              "r4"
+            ],
+            "category": "technical",
+            "prompt": "Can you explain how you typically use Git in collaborative projects? Describe a feature you have implemented using Git that improved the team’s development process.",
+            "answer_outline": "The candidate should discuss their process of using Git for version control, including branching strategies, pull requests, and handling merges. They should also highlight a specific feature or practice (like code reviews or automated testing) that significantly enhanced team collaboration.",
+            "difficulty": 2
+          },
+          {
+            "id": "q9",
+            "requirement_ids": [
+              "r5"
+            ],
+            "category": "system-design",
+            "prompt": "Can you describe a project where you had to choose between using a relational database and a NoSQL database? What factors influenced your decision?",
+            "answer_outline": "The decision was based on factors such as data structure, scalability needs, consistency requirements, and query patterns. A relational database was chosen for its robustness and ACID compliance, while a NoSQL database would be more suitable for unstructured data and increased scalability.",
+            "difficulty": 2
+          },
+          {
+            "id": "q10",
+            "requirement_ids": [
+              "r5"
+            ],
+            "category": "technical",
+            "prompt": "Tell me about a time when you had to optimize a piece of code for performance. What algorithms or data structures did you implement to solve the problem?",
+            "answer_outline": "I identified performance bottlenecks in the code, specifically with nested loops. I replaced it with a more efficient algorithm, possibly using hash maps or binary trees to reduce time complexity, and improved execution speed by over 50%.",
+            "difficulty": 3
+          },
+          {
+            "id": "q11",
+            "requirement_ids": [],
+            "category": "company-fit",
+            "prompt": "What motivates you to work as a Backend Software Engineer, and how does that align with Quikhire's mission of connecting talent with opportunity?",
+            "answer_outline": "The candidate should express a passion for software development and problem-solving, emphasizing how they value the impact of technology on people's careers. They may relate to Quikhire's emphasis on fostering growth and connecting skills with specific opportunities.",
+            "difficulty": 2
+          },
+          {
+            "id": "q12",
+            "requirement_ids": [],
+            "category": "company-fit",
+            "prompt": "Can you describe a project where you worked with cross-functional teams to optimize software performance? How did your strengths contribute to the project's success?",
+            "answer_outline": "The candidate should discuss a relevant project, outlining their role in collaborating with various stakeholders such as product managers and designers. They should highlight specific strengths like coding proficiency or problem-solving skills that led to effective solutions and enhanced performance.",
+            "difficulty": 2
+          }
+        ],
+        "flashcards": [
+          {
+            "id": "f1",
+            "front": "What programming languages should you be proficient in for this position?",
+            "back": "Python, Java, or JavaScript.",
+            "requirement_ids": [
+              "r1"
+            ]
+          },
+          {
+            "id": "f2",
+            "front": "Which methodologies should you have experience with?",
+            "back": "Agile or Scrum methodologies.",
+            "requirement_ids": [
+              "r2"
+            ]
+          },
+          {
+            "id": "f3",
+            "front": "What skills are necessary for strong problem-solving in this role?",
+            "back": "Ability to write efficient algorithms.",
+            "requirement_ids": [
+              "r3"
+            ]
+          },
+          {
+            "id": "f4",
+            "front": "What version control system should you be familiar with?",
+            "back": "Git.",
+            "requirement_ids": [
+              "r4"
+            ]
+          },
+          {
+            "id": "f5",
+            "front": "What fundamental concepts should you understand in regards to data management?",
+            "back": "Data structures and database systems.",
+            "requirement_ids": [
+              "r5"
+            ]
+          }
+        ],
+        "schedule": {
+          "days_available": 5,
+          "days": [
+            {
+              "day": 1,
+              "focus": "Company fit: role motivation, products, customers · Behavioural (STAR): Python, Java, JavaScript · Technical: data structures, database systems · System design: Strong problem-solving skills, ability to write efficient",
+              "question_ids": [
+                "q11",
+                "q2",
+                "q10",
+                "q6"
+              ],
+              "minutes": 90
+            },
+            {
+              "day": 2,
+              "focus": "Behavioural (STAR): version control systems such · Technical: Python, Java, JavaScript",
+              "question_ids": [
+                "q1",
+                "q7"
+              ],
+              "minutes": 30
+            },
+            {
+              "day": 3,
+              "focus": "Behavioural (STAR): Agile or Scrum methodologies · Technical: version control systems such",
+              "question_ids": [
+                "q3",
+                "q8"
+              ],
+              "minutes": 30
+            },
+            {
+              "day": 4,
+              "focus": "System design: Agile or Scrum methodologies, data structures, database systems",
+              "question_ids": [
+                "q4",
+                "q9"
+              ],
+              "minutes": 30
+            },
+            {
+              "day": 5,
+              "focus": "Company fit: role motivation, products, customers · Behavioural (STAR): Strong problem-solving skills, ability to write efficient",
+              "question_ids": [
+                "q5",
+                "q12"
+              ],
+              "minutes": 30
+            }
+          ]
+        },
+        "coverage": {
+          "uncovered_requirement_ids": [],
+          "passes": 1
+        }
+      },
+      "error": null
+    }
+  ]
+}

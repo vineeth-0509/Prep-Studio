@@ -25,7 +25,20 @@ export function buildSchedule(
     question_ids: [] as string[],
     minutes: 0,
   }));
+
+  // Seed Day 1 with one question from each available category so practice starts broad.
+  const assigned = new Set<string>();
+  const firstDay = days[0]!;
+  for (const category of ["company-fit", "behavioural", "technical", "system-design"] as const) {
+    const question = ranked.find((item) => item.category === category && !assigned.has(item.id));
+    if (!question) continue;
+    firstDay.question_ids.push(question.id);
+    firstDay.minutes += MINUTES_BY_DIFFICULTY[question.difficulty];
+    assigned.add(question.id);
+  }
+
   for (const question of ranked) {
+    if (assigned.has(question.id)) continue;
     const selected = days.reduce((best, day, index, all) => {
       const score = day.minutes + index * 2;
       const bestScore = best.minutes + all.indexOf(best) * 2;
@@ -49,10 +62,40 @@ export function buildSchedule(
   for (const day of days) {
     const assigned = day.question_ids.map((id) => questions.find((question) => question.id === id)!);
     if (assigned.length) {
-      const counts = new Map<string, number>();
-      assigned.forEach((question) => counts.set(question.category, (counts.get(question.category) ?? 0) + 1));
-      const focusCategory = [...counts].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]?.[0];
-      day.focus = focusCategory ? `Practice ${focusCategory} questions` : day.focus;
+      const categoryLabels: Record<Question["category"], string> = {
+        "company-fit": "Company fit",
+        behavioural: "Behavioural (STAR)",
+        technical: "Technical",
+        "system-design": "System design",
+      };
+      const topics = new Map<Question["category"], string[]>();
+      for (const question of assigned) {
+        const entries = topics.get(question.category) ?? [];
+        const requirementTopics = question.requirement_ids
+          .map((id) => requirements.find((requirement) => requirement.id === id)?.text)
+          .filter((value): value is string => Boolean(value));
+        const rawTopics = requirementTopics.length ? requirementTopics : [question.category === "company-fit" ? "role motivation, products, and customers" : question.prompt];
+        for (const raw of rawTopics) {
+          const phrases = raw
+            .replace(/^(experience|knowledge|proficiency|familiarity|understanding)\s+(with|of|in)\s+/i, "")
+            .split(/[;,.]|\band\b|\bincluding\b/)
+            .map((part) => part.trim().replace(/^(and|or)\s+/i, ""))
+            .filter(Boolean)
+            .slice(0, 3)
+            .map((part) => part.split(/\s+/).slice(0, 4).join(" "));
+          for (const phrase of phrases) {
+            if (!entries.some((existing) => existing.toLowerCase() === phrase.toLowerCase())) entries.push(phrase);
+            if (entries.length >= 3) break;
+          }
+          if (entries.length >= 3) break;
+        }
+        topics.set(question.category, entries);
+      }
+      const order: Question["category"][] = ["company-fit", "behavioural", "technical", "system-design"];
+      day.focus = order
+        .filter((category) => topics.has(category))
+        .map((category) => `${categoryLabels[category]}: ${(topics.get(category) ?? []).join(", ")}`)
+        .join(" · ");
     }
   }
     return { days_available: daysAvailable, days };
